@@ -1,0 +1,6 @@
+<launch>
+  <node pkg="service_tut" type="polly.py" name="polly" respawn="true" output="screen"/>
+  <node pkg="service_tut" type="record.py" name="record" required="true" output="screen"/>
+  <node pkg="service_tut" type="dialogflow.py" name="dialogflow" respawn="true" output="screen"/>
+  <node pkg="service_tut" type="body.py" name="body" required="true" output="screen"/>
+</launch>

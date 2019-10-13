@@ -1,0 +1,8 @@
+prefix=/home/pi/dim_ws/devel
+
+Name: dimbot
+Description: Description of dimbot
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/pi/dim_ws/devel/lib 
+Requires: 

@@ -1,0 +1,8 @@
+prefix=/home/pi/dim_ws/devel
+
+Name: dim
+Description: Description of dim
+Version: 0.0.0
+Cflags: -I/home/pi/dim_ws/devel/include
+Libs: -L/home/pi/dim_ws/devel/lib 
+Requires: 

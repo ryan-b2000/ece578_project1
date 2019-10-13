@@ -1,0 +1,2 @@
+beginner_tutorials:dim:service_tut
+-DCATKIN_DEVEL_PREFIX=/home/pi/dim_ws/devel -DCMAKE_INSTALL_PREFIX=/home/pi/dim_ws/install -G Unix Makefiles
