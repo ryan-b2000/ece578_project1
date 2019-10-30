@@ -289,7 +289,7 @@ def main_test():
     pwm.set_pwm(pwm_channel_8,0,degree_0)
     time.sleep(0.8)
     
-    speaking_main('I am turning my left arm right)
+    speaking_main('I am turning my left arm right')
     time.sleep(0.8)
     pwm.set_pwm(pwm_channel_8,0,degree_30)
     time.sleep(0.8)

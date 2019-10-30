@@ -1,5 +1,5 @@
-
 #! /usr/bin/env python3
+
 
 '''	#################################################################################################
 	
@@ -10,6 +10,7 @@
 
 '''
 
+import time
 import MoveClass
 
 
@@ -19,105 +20,130 @@ class FaceClass:
         print("Face class initialized")
         self.__Move = MoveClass()
 
+
     def FaceReset(self):
         self.__Move.EyebrowFlat(RIGHT)
-
-        self.Left_Eyebrow(EYEBROW_L,DEGREE_120)
-        self.Right_Eyebrow(EYEBROW_R,DEGREE_120)
-        self.Mouth(MOUTH,DEGREE_0)
-        self.Right_Eye_Lid(EYELID_R,DEGREE_90)
-        self.Left_Eye_Lid(EYELID_L,DEGREE_120)
-        self.Eye_Vertical(EYE_VERTICAL,DEGREE_100)
-        self.Eye_Horizontal(EYE_HORIZONTAL,DEGREE_110)
+        self.__Move.EyebrowFlat(LEFT)
+        self.__Move.EyeOpen(RIGHT)
+        self.__Move.EyeOpen(LEFT)
+        self.__Move.EyeCenter()
+        self.__Move.EyeMiddle()
+        self.__Move.MouthClose()
         print("Reset is done")
 
+
     def Excited(self):
-        self.Mouth(MOUTH,DEGREE_60)
-        self.Right_Eyebrow(EYEBROW_R,DEGREE_135)
-        self.Left_Eyebrow(EYEBROW_L,DEGREE_135)
-        self.Right_Eye_Lid(EYELID_R,DEGREE_90)
-        self.Left_Eye_Lid(EYELID_L,DEGREE_120)
-        os.system('flite -voice rms -t "Hey, I am Excited"')
-        time.sleep(0.5)
+        self.__Move.MouthOpen()
+        self.__Move.EyebrowFlat(RIGHT)
+        self.__Move.EyebrowFlat(LEFT)
+        self.__Move.EyeMiddle()
+        self.__Move.EyeOpen(RIGHT)
+        self.__Move.EyeOpen(LEFT)
+        time.sleep(2)
+        self.FaceReset()
+        print("Display excited expression")
+
     
-    def Very_happy(self):
-        self.Mouth(MOUTH,DEGREE_60)
-        self.Eye_Vertical(EYE_VERTICAL,DEGREE_100)
-        self.Right_Eyebrow(EYEBROW_R,DEGREE_135)
-        self.Left_Eyebrow(EYEBROW_L,DEGREE_135)
-        self.Right_Eye_Lid(EYELID_R,DEGREE_140)
-        self.Left_Eye_Lid(EYELID_L,DEGREE_70)
-        self.Eye_Vertical(EYE_VERTICAL,DEGREE_120)
-        speaking('Do not be sad. You will win next time! Hahahahahahaha')
-        time.sleep(0.5)
-   
+    def VeryHappy(self):
+        self.__Move.MouthOpen()
+        self.__Move.EyeUp()
+        self.__Move.EyeOpen(RIGHT)
+        self.__Move.EyeOpen(LEFT)
+        self.__Move.EyebrowUp(RIGHT)
+        self.__Move.EyebrowUp(LEFT)
+        time.sleep(2)
+        self.FaceReset()
+        print("Display very happy expression")
+
 
     def Sad(self):
-        Robo_face.Mouth(MOUTH,DEGREE_45)
-        Robo_face.Right_Eyebrow(EYEBROW_R,DEGREE_140)
-        Robo_face.Left_Eyebrow(EYEBROW_L,DEGREE_140)
-        Robo_face.Right_Eye_Lid(EYELID_R,DEGREE_130)
-        Robo_face.Left_Eye_Lid(EYELID_L,DEGREE_85)
-        Robo_face.Eye_Vertical(EYE_VERTICAL,DEGREE_100)
-        speaking('I will win next time!')
-        time.sleep(0.5)
+        self.__Move.MouthClose()
+        self.__Move.EyebrowFlat(RIGHT)
+        self.__Move.EyebrowFlat(LEFT)
+        self.__Move.EyeClose(RIGHT)
+        self.__Move.EyeClose(LEFT)
+        self.__Move.EyeDown()
+        time.sleep(2)
+        self.FaceReset()
+        print("Display sad expression")
     
-    # wink both eyes together
-    def Winky(self):
+
+    # blink both eyes
+    def Blink(self):
         i = 0
-        Robo_face.Mouth(MOUTH,DEGREE_60)
-        Robo_face.Right_Eyebrow(EYEBROW_R,DEGREE_135)
-        Robo_face.Left_Eyebrow(EYEBROW_L,DEGREE_135)
-        Robo_face.Right_Eye_Lid(EYELID_R,DEGREE_90)
-        Robo_face.Left_Eye_Lid(EYELID_L,DEGREE_120)
+        self.__Move.MouthClose()
+        self.__Move.EyebrowUp(RIGHT)
+        self.__Move.EyebrowUp(LEFT)
+        self.__Move.EyeOpen()
+
         while(i < 2):
-            Robo_face.Left_Eye_Lid(EYELID_L,DEGREE_60)
-            Robo_face.Right_Eye_Lid(EYELID_R,DEGREE_150)
-            Robo_face.Left_Eyebrow(EYEBROW_L,DEGREE_90)
-            Robo_face.Right_Eyebrow(EYEBROW_R,DEGREE_90)
+            self.__Move.EyebrowDown(RIGHT)
+            self.__Move.EyebrowDown(LEFT)
+            self.__Move.EyeClose()
             time.sleep(0.3)
-            Robo_face.Left_Eye_Lid(EYELID_L,DEGREE_120)
-            Robo_face.Right_Eye_Lid(EYELID_R,DEGREE_90)
-            Robo_face.Left_Eyebrow(EYEBROW_L,DEGREE_135)
-            Robo_face.Right_Eyebrow(EYEBROW_R,DEGREE_135)
+            self.__Move.EyebrowUp(RIGHT)
+            self.__Move.EyebrowUp(LEFT)
+            self.__Move.EyeOpen()
             time.sleep(0.3)
             i = i + 1	
             time.sleep(0.3)
+        time.sleep(2)
+        self.FaceReset()
+        print("Blinking expression")
+
+
+    # Wink right eye
+    def WinkRight(self): 
+        for i in range(2):
+            self.__Move.EyebrowUp(RIGHT)
+            self.__Move.EyeOpen(RIGHT)
+            time.sleep(0.5)
+            self.__Move.EyebrowDown(RIGHT)
+            self.__Move.EyeClose(RIGHT)
+        self.__Move.EyebrowUp(RIGHT)
+        self.__Move.EyeOpen(RIGHT)
+        time.sleep(2)
+        self.FaceReset()
+        print("Wink right eye")
+
 
     def Angry(self):
-        Robo_face.Mouth(MOUTH,DEGREE_45)
-        self.Eye_Horizontal(EYE_HORIZONTAL,DEGREE_160)
+        self.__Move.MouthClose()
+        self.__Move.EyeMiddle()
+        self.__Move.EyebrowDown(RIGHT)
+        self.__Move.EyebrowDown(LEFT)
+        self.__Move.EyeLeft()
         time.sleep(1)
-        self.Eye_Horizontal(EYE_HORIZONTAL,DEGREE_80)
+        self.__Move.EyeRight()
         time.sleep(1)
-        self.Eye_Horizontal(EYE_HORIZONTAL,DEGREE_110)
-        time.sleep(0.3)
-        Robo_face.Right_Eyebrow(EYEBROW_R,DEGREE_90)
-        Robo_face.Left_Eyebrow(EYEBROW_L,DEGREE_90)
-        Robo_face.Right_Eye_Lid(EYELID_R,DEGREE_100)
-        Robo_face.Left_Eye_Lid(EYELID_L,DEGREE_110)
-        Robo_face.Eye_Vertical(EYE_VERTICAL,DEGREE_100)
-        speaking('I will win next time!')
-        time.sleep(0.5)
+        self.__Move.EyeCenter()
+        time.sleep(2)
+        self.FaceReset()
+        print("Display angry expression")
 
-    # Wink left and right eyes by turns
-    def Winky_new(self): #left 90 open 150 close right 120 open 60 close brow 120 h 135\ 90 / 
-        i = 0
-        Robo_face.Mouth(MOUTH,DEGREE_60)
-        Robo_face.Right_Eyebrow(EYEBROW_R,DEGREE_120)
-        Robo_face.Left_Eyebrow(EYEBROW_L,DEGREE_120)
-        Robo_face.Right_Eye_Lid(EYELID_R,DEGREE_90)
-        Robo_face.Left_Eye_Lid(EYELID_L,DEGREE_120)
-        while(i < 3):
-            Robo_face.Left_Eye_Lid(EYELID_L,DEGREE_120)
-            Robo_face.Right_Eye_Lid(EYELID_R,DEGREE_150)
-            Robo_face.Left_Eyebrow(EYEBROW_L,DEGREE_110)
-            Robo_face.Right_Eyebrow(EYEBROW_R,DEGREE_135)
-            time.sleep(1)
-            Robo_face.Left_Eye_Lid(EYELID_L,DEGREE_60)
-            Robo_face.Right_Eye_Lid(EYELID_R,DEGREE_90)
-            Robo_face.Left_Eyebrow(EYEBROW_L,DEGREE_135)
-            Robo_face.Right_Eyebrow(EYEBROW_R,DEGREE_110)
-            time.sleep(1)
-            i = i + 1	
-            time.sleep(0.3)
+
+# ================================================================ #
+if __name__ == "__main__":  
+    print("Running face tests...")
+    Face = FaceClass()
+
+    Face.FaceReset()
+    time.sleep(2)
+
+    Face.Excited()
+    time.sleep(2)
+
+    Face.VeryHappy()
+    time.sleep(2)
+
+    Face.Sad()
+    time.sleep(2)
+
+    Face.Blink()
+    time.sleep(2)
+
+    Face.WinkRight()
+    time.sleep(2)
+
+    Face.Angry()
+    time.sleep(2)

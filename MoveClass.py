@@ -78,22 +78,22 @@ class MoveClass:
 
 	# ==== Total Face Reset ==== #
 	def FaceReset(self):
-		Eyebrow_Flat(RIGHT)
-		Eyebrow_Flat(LEFT)
-		Eye_Open(RIGHT)
-		Eye_Open(LEFT)
-		Eye_Center()
-		Eye_Middle()
-		Mouth_Close()
-		Shoulder_Down(RIGHT)
-		Shoulder_Down(LEFT)
-		Arm_In(RIGHT)
-		Arm_In(LEFT)
-		Elbow_Up(RIGHT)
-		Elbow_Up(LEFT)
+		EyebrowFlat(RIGHT)
+		EyebrowFlat(LEFT)
+		EyeOpen(RIGHT)
+		EyeOpen(LEFT)
+		EyeCenter()
+		EyeMiddle()
+		MouthClose()
+		ShoulderDown(RIGHT)
+		ShoulderDown(LEFT)
+		ArmIn(RIGHT)
+		ArmIn(LEFT)
+		ElbowUp(RIGHT)
+		ElbowUp(LEFT)
 
 	# ==== Eyebrow Movement ==== #
-	def Eyebrow_Up(self, side):
+	def EyebrowUp(self, side):
 		if (side == RIGHT):
 			print("Right Eyebrow Up")
 			self.__Move(EYEBROW_R, 80)
@@ -101,7 +101,7 @@ class MoveClass:
 			print("Left Eyebrow Up")
 			self.__Move(EYEBROW_L, 80)
 
-	def Eyebrow_Flat(self, side):
+	def EyebrowFlat(self, side):
 		if (side == RIGHT):
 			print("Right Eyebrow Center")
 			self.__Move(EYEBROW_R, 120)
@@ -109,7 +109,7 @@ class MoveClass:
 			print("Left Eyebrow Center")
 			self.__Move(EYEBROW_L, 120)
 
-	def Eyebrow_Down(self, side):
+	def EyebrowDown(self, side):
 		if (side == RIGHT):
 			print("Right Eyebrow Center")
 			self.__Move(EYEBROW_R, 140)
@@ -119,7 +119,7 @@ class MoveClass:
 
 
 	# ==== Eyelid Movement ==== #
-	def Eye_Open(self, side):
+	def EyeOpen(self, side):
 		if (side == RIGHT):
 			print("Eyelid Right Open")
 			self.__Move(EYELID_R, 90)
@@ -127,7 +127,7 @@ class MoveClass:
 			print("Eyelid Left Open")
 			self.__Move(EYEBROW_L, 120)
 
-	def Eye_Close(self, side):
+	def EyeClose(self, side):
 		if (side == RIGHT):
 			print("Eyelid Right Close")
 			self.__Move(EYELID_R, 150)
@@ -137,45 +137,45 @@ class MoveClass:
 
 
 	# ==== Eye Horizontal Movement ==== #
-	def Eye_Left(self):
+	def EyeLeft(self):
 		print("Eye Horizontal Left")
 		self.__Move(EYE_HORIZONTAL, 80)
 
-	def Eye_Center(self,channel,degree):
+	def EyeCenter(self,channel,degree):
 		print("Eye Horizontal Center")
 		self.__Move(EYE_HORIZONTAL, 110)
 	
-	def Eye_Right(self):
+	def EyeRight(self):
 		print("Eye Horizontal Right")
 		self.__Move(EYE_HORIZONTAL, 160)
 
 
-	# ==== Eye Horizontal Movement ==== #
-	def Eye_Up(self):
+	# ==== Eye Vertical Movement ==== #
+	def EyeUp(self):
 		print("Eye Vertical Up")
 		self.__Move(EYE_VERTICAL, 80)
 
-	def Eye_Middle(self):
+	def EyeMiddle(self):
 		print("Eye Vertical Middle")
 		self.__Move(EYE_VERTICAL, 100)
 
-	def Eye_Down(self):
+	def EyeDown(self):
 		print("Eye Vertical Down")
 		self.__Move(EYE_VERTICAL, 120)
 
 
 	# ======== Mouth Movement ======== #
-	def Mouth_Open(self):
+	def MouthOpen(self):
 		print("Mouth Open")
 		self.__Move(MOUTH, 60)
 
-	def Mouth_Close(self):
+	def MouthClose(self):
 		print("Mouth Close")
 		self.__Move(MOUTH, 0)
 
 
 	# ======== Shoulder Movement ======== #
-	def Shoulder_Up(self, side):
+	def ShoulderUp(self, side):
 		if (side == RIGHT):
 			print("Right Shoulder Up")
 			self.__Move(ARM_ROTATE_R, 100)
@@ -183,7 +183,7 @@ class MoveClass:
 			print("Left Shoulder Up")
 			self.__Move(ARM_ROTATE_L, 100)
 
-	def Shoulder_Down(self, side):
+	def ShoulderDown(self, side):
 		if (side == RIGHT):
 			print("Right Shoulder Down")
 			self.__Move(ARM_ROTATE_R, 0)
@@ -193,7 +193,7 @@ class MoveClass:
 
 
 	# ======== Arm Movement ======== #
-	def Arm_Out(self, side):
+	def ArmOut(self, side):
 		if (side == RIGHT):
 			print("Right Arm Out")
 			self.__Move(ARM_SIDEWAYS_R, 100)
@@ -201,7 +201,7 @@ class MoveClass:
 			print("Left Arm Out")
 			self.__Move(ARM_SIDEWAYS_L, 100)
 
-	def Arm_In(self, side):
+	def ArmIn(self, side):
 		if (side == RIGHT):
 			print("Right Arm In")
 			self.__Move(ARM_SIDEWAYS_R, 0)
@@ -211,7 +211,7 @@ class MoveClass:
 
 
 	# ======== Elbow Movement ======== #
-	def Elbow_Up(self, side):
+	def ElbowUp(self, side):
 		if (side == RIGHT):
 			print("Right Elbow Up")
 			self.__Move(ELBOW_R, 150)
@@ -219,7 +219,7 @@ class MoveClass:
 			print("Left Elbow Up")
 			self.__Move(ELBOW_L, 150)
 
-	def Elbow_Down(self, side):
+	def ElbowDown(self, side):
 		if (side == RIGHT):
 			print("Right Elbow Down")
 			self.__Move(ELBOW_R, 170)
@@ -230,7 +230,7 @@ class MoveClass:
 
 	def __ConvertDegrees(self, degree):
 		converter = {
-			0: 2,
+			0: 2,		
 			30: 171,
 			40:	194,
 			45: 206,
@@ -271,61 +271,67 @@ def TestAllServos():
 
 	Move.FaceReset()
 
-	Move.Eyebrow_Up(RIGHT)
+	Move.EyebrowUp(RIGHT)
 	Sleep()
-	Move.Eyebrow_Down(RIGHT)
+	Move.EyebrowDown(RIGHT)
 	Sleep()
-	Move.Eyebrow_Flat(RIGHT)
-	Sleep()
-
-	Move.Eyebrow_Up(LEFT)
-	Sleep()
-	Move.Eyebrow_Down(LEFT)
-	Sleep()
-	Move.Eyebrow_Flat(LEFT)
+	Move.EyebrowFlat(RIGHT)
 	Sleep()
 
-	Move.Eye_Close(RIGHT)
+	Move.EyebrowUp(LEFT)
 	Sleep()
-	Move.Eye_Open(RIGHT)
+	Move.EyebrowDown(LEFT)
 	Sleep()
-
-	Move.Eye_Close(LEFT)
-	Sleep()
-	Move.Eye_Open(LEFT)
+	Move.EyebrowFlat(LEFT)
 	Sleep()
 
-	Move.Mouth_Open()
+	Move.EyeClose(RIGHT)
 	Sleep()
-	Move.Mouth_Close()
-	Sleep()
-
-	Move.Shoulder_Up(RIGHT)
-	Sleep()
-	Move.Shoulder_Down(RIGHT)
-	Sleep()
-	Move.Shoulder_Up(LEFT)
-	Sleep()
-	Move.Shoulder_Down(LEFT)
+	Move.EyeOpen(RIGHT)
 	Sleep()
 
-	Move.Arm_Out(RIGHT)
+	Move.EyeClose(LEFT)
 	Sleep()
-	Move.Arm_In(RIGHT)
-	Sleep()
-	Move.Arm_Out(LEFT)
-	Sleep()
-	Move.Arm_In(LEFT)
+	Move.EyeOpen(LEFT)
 	Sleep()
 
-	Move.Elbow_Down(RIGHT)
+	Move.MouthOpen()
 	Sleep()
-	Move.Elbow_Up(RIGHT)
+	Move.MouthClose()
 	Sleep()
-	Move.Elbow_Down(LEFT)
+
+	Move.ShoulderUp(RIGHT)
 	Sleep()
-	Move.Elbow_Up(LEFT)
+	Move.ShoulderDown(RIGHT)
 	Sleep()
+	Move.ShoulderUp(LEFT)
+	Sleep()
+	Move.ShoulderDown(LEFT)
+	Sleep()
+
+	Move.ArmOut(RIGHT)
+	Sleep()
+	Move.ArmIn(RIGHT)
+	Sleep()
+	Move.ArmOut(LEFT)
+	Sleep()
+	Move.ArmIn(LEFT)
+	Sleep()
+
+	Move.ElbowDown(RIGHT)
+	Sleep()
+	Move.ElbowUp(RIGHT)
+	Sleep()
+	Move.ElbowDown(LEFT)
+	Sleep()
+	Move.ElbowUp(LEFT)
+	Sleep()
+
+
+def TestServoRanges():
+	while (1):
+		chan = input("Channel? ")
+		val = input("Degree? ")
 
 
 # ================================================================ #
@@ -333,3 +339,4 @@ if __name__ == "__main__":
     print("Running servo tests...")
 
 	TestAllServos()
+

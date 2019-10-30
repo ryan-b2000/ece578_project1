@@ -8,7 +8,7 @@
     varying emotional responses by the roboto
 
 '''
-
+import time
 import MoveClass
 
 
@@ -18,7 +18,7 @@ class ArmClass:
         print("Move class initialized")
         self.__Move = MoveClass()
 
-    def Arm_Reset(self):
+    def ArmReset(self):
         print("Arm reset")
         self.__Move.ElbowUp(RIGHT)
         self.__Move.ElbowUp(LEFT)
@@ -27,11 +27,27 @@ class ArmClass:
         self.__Move.ShoulderDown(RIGHT)
         self.__Move.ShoulderDown(LEFT)
 
-    def Bang_Drum_Right(self):
+    def BangDrumRight(self):
         print("Bang drum right")
         self.__Move.ElbowDown(RIGHT)
+        self.__Move.ElbowUp(RIGHT)
 
-    def Band_Drum_Left(self):
+    def BandDrumLeft(self):
         print("Bang drum left")
         self.__Move.ElbowDown(LEFT)
+        self.__Move.ElbowUp(LEFT)
 
+
+# ================================================================ #
+if __name__ == "__main__":  
+    print("Running arm tests...")
+    
+    arm = ArmClass()
+    arm.ArmReset()
+    time.sleep(2)
+
+    arm.BangDrumRight()
+    time.sleep(2)
+    
+    arm.BandDrumLeft()
+    time.sleep(2)
