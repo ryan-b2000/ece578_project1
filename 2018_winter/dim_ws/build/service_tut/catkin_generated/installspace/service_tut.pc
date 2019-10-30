@@ -1,8 +1,0 @@
-prefix=/home/pi/dim_ws/install
-
-Name: service_tut
-Description: Description of service_tut
-Version: 0.0.0
-Cflags: -I/home/pi/dim_ws/install/include
-Libs: -L/home/pi/dim_ws/install/lib 
-Requires: message_runtime
