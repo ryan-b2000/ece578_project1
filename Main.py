@@ -14,7 +14,7 @@ import time
 from keras.preprocessing import image
 import os
 from random import randint
-import Adafruit_PCA9685
+
 import RPi.GPIO as GPIO
 import threading            #multithreading library
 

@@ -10,13 +10,18 @@
 
 '''
 
+import MoveClass
 
 
 class FaceClass:
         
+    def __init__ (self):
+        print("Face class initialized")
+        self.__Move = MoveClass()
 
+    def FaceReset(self):
+        self.__Move.EyebrowFlat(RIGHT)
 
-    def Face_Reset(self):
         self.Left_Eyebrow(EYEBROW_L,DEGREE_120)
         self.Right_Eyebrow(EYEBROW_R,DEGREE_120)
         self.Mouth(MOUTH,DEGREE_0)

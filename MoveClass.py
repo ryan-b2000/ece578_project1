@@ -10,6 +10,7 @@
 ''' 
 
 #import Adafruit_PCA9685
+import time
 
 # ======================= GLOBAL DEFINES ======================= #
  
@@ -75,51 +76,157 @@ class MoveClass:
 		print("Degree: " + str(degree) + " = " + str(val))
 		PCA9685.set_pwm(channel, 0, val)
 
+	# ==== Total Face Reset ==== #
+	def FaceReset(self):
+		Eyebrow_Flat(RIGHT)
+		Eyebrow_Flat(LEFT)
+		Eye_Open(RIGHT)
+		Eye_Open(LEFT)
+		Eye_Center()
+		Eye_Middle()
+		Mouth_Close()
+		Shoulder_Down(RIGHT)
+		Shoulder_Down(LEFT)
+		Arm_In(RIGHT)
+		Arm_In(LEFT)
+		Elbow_Up(RIGHT)
+		Elbow_Up(LEFT)
 
-	def Left_Eyebrow(self,channel,degree):
-		# 80 \  | 140 /  | 120 flat -
-		PCA9685.set_pwm(channel,0,degree)
-
+	# ==== Eyebrow Movement ==== #
 	def Eyebrow_Up(self, side):
-		if (side == 'Right'):
+		if (side == RIGHT):
 			print("Right Eyebrow Up")
 			self.__Move(EYEBROW_R, 80)
 		else:
 			print("Left Eyebrow Up")
 			self.__Move(EYEBROW_L, 80)
 
+	def Eyebrow_Flat(self, side):
+		if (side == RIGHT):
+			print("Right Eyebrow Center")
+			self.__Move(EYEBROW_R, 120)
+		else
+			print("Left Eyebrow Center")
+			self.__Move(EYEBROW_L, 120)
 
-	def Right_Eyebrow(self,channel,degree):
-		# 80 \  | 140 /  | 120 flat -
-		PCA9685.set_pwm(channel,0,degree)
+	def Eyebrow_Down(self, side):
+		if (side == RIGHT):
+			print("Right Eyebrow Center")
+			self.__Move(EYEBROW_R, 140)
+		else
+			print("Left Eyebrow Center")
+			self.__Move(EYEBROW_L, 140)
 
+
+	# ==== Eyelid Movement ==== #
+	def Eye_Open(self, side):
+		if (side == RIGHT):
+			print("Eyelid Right Open")
+			self.__Move(EYELID_R, 90)
+		else:
+			print("Eyelid Left Open")
+			self.__Move(EYEBROW_L, 120)
+
+	def Eye_Close(self, side):
+		if (side == RIGHT):
+			print("Eyelid Right Close")
+			self.__Move(EYELID_R, 150)
+		else:
+			print("Eyelid Left Close")
+			self.__Move(EYELID_L, 60)
+
+
+	# ==== Eye Horizontal Movement ==== #
 	def Eye_Left(self):
-		print("eye left")
+		print("Eye Horizontal Left")
+		self.__Move(EYE_HORIZONTAL, 80)
 
 	def Eye_Center(self,channel,degree):
-		# 110
-		PCA9685.set_pwm(channel,0,degree)
+		print("Eye Horizontal Center")
+		self.__Move(EYE_HORIZONTAL, 110)
 	
+	def Eye_Right(self):
+		print("Eye Horizontal Right")
+		self.__Move(EYE_HORIZONTAL, 160)
 
-	def Mouth(self,channel,degree):
-		#60 open | 0 close
-		PCA9685.set_pwm(channel,0,degree)
-	
-	def Right_Eye_Lid(self,channel,degree):
-		#150 close | 90 open
-		PCA9685.set_pwm(channel,0,degree)
-	
-	def Left_Eye_Lid(self,channel,degree):
-		#60 close | 120 open
-		PCA9685.set_pwm(channel,0,degree)
 
-	def Eye_Vertical(self,channel,degree):
-		#80 up | 120 down | 100 center
-		PCA9685.set_pwm(channel,0,degree)
-	
-	def Eye_Horizontal(self,channel,degree):
-		#160 left | 80 Right | 110 center
-		PCA9685.set_pwm(channel,0,degree)
+	# ==== Eye Horizontal Movement ==== #
+	def Eye_Up(self):
+		print("Eye Vertical Up")
+		self.__Move(EYE_VERTICAL, 80)
+
+	def Eye_Middle(self):
+		print("Eye Vertical Middle")
+		self.__Move(EYE_VERTICAL, 100)
+
+	def Eye_Down(self):
+		print("Eye Vertical Down")
+		self.__Move(EYE_VERTICAL, 120)
+
+
+	# ======== Mouth Movement ======== #
+	def Mouth_Open(self):
+		print("Mouth Open")
+		self.__Move(MOUTH, 60)
+
+	def Mouth_Close(self):
+		print("Mouth Close")
+		self.__Move(MOUTH, 0)
+
+
+	# ======== Shoulder Movement ======== #
+	def Shoulder_Up(self, side):
+		if (side == RIGHT):
+			print("Right Shoulder Up")
+			self.__Move(ARM_ROTATE_R, 100)
+		else:
+			print("Left Shoulder Up")
+			self.__Move(ARM_ROTATE_L, 100)
+
+	def Shoulder_Down(self, side):
+		if (side == RIGHT):
+			print("Right Shoulder Down")
+			self.__Move(ARM_ROTATE_R, 0)
+		else:
+			print("Left Shoulder Down")
+			self.__Move(ARM_ROTATE_L, 0)
+
+
+	# ======== Arm Movement ======== #
+	def Arm_Out(self, side):
+		if (side == RIGHT):
+			print("Right Arm Out")
+			self.__Move(ARM_SIDEWAYS_R, 100)
+		else:
+			print("Left Arm Out")
+			self.__Move(ARM_SIDEWAYS_L, 100)
+
+	def Arm_In(self, side):
+		if (side == RIGHT):
+			print("Right Arm In")
+			self.__Move(ARM_SIDEWAYS_R, 0)
+		else:
+			print("Left Arm In")
+			self.__Move(ARM_SIDEWAYS_L, 0)
+
+
+	# ======== Elbow Movement ======== #
+	def Elbow_Up(self, side):
+		if (side == RIGHT):
+			print("Right Elbow Up")
+			self.__Move(ELBOW_R, 150)
+		else:
+			print("Left Elbow Up")
+			self.__Move(ELBOW_L, 150)
+
+	def Elbow_Down(self, side):
+		if (side == RIGHT):
+			print("Right Elbow Down")
+			self.__Move(ELBOW_R, 170)
+		else:
+			print("Left Elbow Down")
+			self.__Move(ELBOW_L, 170)
+
 
 	def __ConvertDegrees(self, degree):
 		converter = {
@@ -149,12 +256,80 @@ class MoveClass:
 		}
 		return converter.get(degree, "Invalid")
 
+# Sleep function abstraction
+def Sleep():
+	time.sleep(0.5)
+
+def CustomTest():
+	while(1):
+		chan = input("Channel? ")
+		degree = 
+
+# Test all servos 
+def TestAllServos():
+	Move = MoveClass()
+
+	Move.FaceReset()
+
+	Move.Eyebrow_Up(RIGHT)
+	Sleep()
+	Move.Eyebrow_Down(RIGHT)
+	Sleep()
+	Move.Eyebrow_Flat(RIGHT)
+	Sleep()
+
+	Move.Eyebrow_Up(LEFT)
+	Sleep()
+	Move.Eyebrow_Down(LEFT)
+	Sleep()
+	Move.Eyebrow_Flat(LEFT)
+	Sleep()
+
+	Move.Eye_Close(RIGHT)
+	Sleep()
+	Move.Eye_Open(RIGHT)
+	Sleep()
+
+	Move.Eye_Close(LEFT)
+	Sleep()
+	Move.Eye_Open(LEFT)
+	Sleep()
+
+	Move.Mouth_Open()
+	Sleep()
+	Move.Mouth_Close()
+	Sleep()
+
+	Move.Shoulder_Up(RIGHT)
+	Sleep()
+	Move.Shoulder_Down(RIGHT)
+	Sleep()
+	Move.Shoulder_Up(LEFT)
+	Sleep()
+	Move.Shoulder_Down(LEFT)
+	Sleep()
+
+	Move.Arm_Out(RIGHT)
+	Sleep()
+	Move.Arm_In(RIGHT)
+	Sleep()
+	Move.Arm_Out(LEFT)
+	Sleep()
+	Move.Arm_In(LEFT)
+	Sleep()
+
+	Move.Elbow_Down(RIGHT)
+	Sleep()
+	Move.Elbow_Up(RIGHT)
+	Sleep()
+	Move.Elbow_Down(LEFT)
+	Sleep()
+	Move.Elbow_Up(LEFT)
+	Sleep()
 
 
 # ================================================================ #
 if __name__ == "__main__":  
     print("Running servo tests...")
 
-    Move = MoveClass()
-    Move.Eyebrow_Up(RIGHT)
-    Move.Eyebrow_Up(LEFT)
+	TestAllServos()
