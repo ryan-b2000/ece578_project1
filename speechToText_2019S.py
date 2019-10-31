@@ -7,7 +7,7 @@ The robot DIM can make the responses according to the uses's speech input.
 This version we added one interactive game for DIM: scissors, paper and rock game. 
 '''
 from __future__ import division
-import speech_recognition as sr
+
 from gtts import gTTS
 import RPi.GPIO as GPIO
 import time
@@ -341,26 +341,7 @@ def detect_intent_texts(project_id, session_id, texts, language_code):
         redOff()       
 
        
-def detect_audio():
-    r = sr.Recognizer()
-    with sr.Microphone() as source:
-        print("Say something!")
-        greenOn()
-        audio = r.listen(source,phrase_time_limit=5)
-        greenOff()
-        # Speech recognition using Google Speech Recognition                                                                                         
-        try:
-            input_speech = r.recognize_google(audio)
-        except sr.UnknownValueError:
-            input_speech = ""
-            print("Google Speech Recognition could not understand audio")
-            pass
-        except sr.RequestError as e:
-            input_speech = ""
-            print("Could not request results from Google Speech Recognition service; {0}".format(e))
-            pass
 
-    return input_speech
 
 
 #Class Face contains methods for the Facial expressions

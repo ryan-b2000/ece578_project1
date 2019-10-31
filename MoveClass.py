@@ -76,6 +76,13 @@ class MoveClass:
 		print("Degree: " + str(degree) + " = " + str(val))
 		PCA9685.set_pwm(channel, 0, val)
 
+	def CustomMove(self, channel, degree):
+		print("Channel: " + str(channel) + " Degree: " + str(degree))
+		val = self.__ConvertDegrees(degree)
+		print("Degree: " + str(degree) + " = " + str(val))
+		PCA9685.set_pwm(int(channel), 0, int(val))
+
+
 	# ==== Total Face Reset ==== #
 	def FaceReset(self):
 		EyebrowFlat(RIGHT)
@@ -85,12 +92,7 @@ class MoveClass:
 		EyeCenter()
 		EyeMiddle()
 		MouthClose()
-		ShoulderDown(RIGHT)
-		ShoulderDown(LEFT)
-		ArmIn(RIGHT)
-		ArmIn(LEFT)
-		ElbowUp(RIGHT)
-		ElbowUp(LEFT)
+		
 
 	# ==== Eyebrow Movement ==== #
 	def EyebrowUp(self, side):
@@ -105,7 +107,7 @@ class MoveClass:
 		if (side == RIGHT):
 			print("Right Eyebrow Center")
 			self.__Move(EYEBROW_R, 120)
-		else
+		else:
 			print("Left Eyebrow Center")
 			self.__Move(EYEBROW_L, 120)
 
@@ -113,7 +115,7 @@ class MoveClass:
 		if (side == RIGHT):
 			print("Right Eyebrow Center")
 			self.__Move(EYEBROW_R, 140)
-		else
+		else:
 			print("Left Eyebrow Center")
 			self.__Move(EYEBROW_L, 140)
 
@@ -256,14 +258,18 @@ class MoveClass:
 		}
 		return converter.get(degree, "Invalid")
 
+
+
 # Sleep function abstraction
 def Sleep():
 	time.sleep(0.5)
 
 def CustomTest():
+	Move = MoveClass()
 	while(1):
 		chan = input("Channel? ")
-		degree = 
+		degree = input("Degree? ")
+		Move.CustomMove(chan, degree)
 
 # Test all servos 
 def TestAllServos():
@@ -328,15 +334,17 @@ def TestAllServos():
 	Sleep()
 
 
-def TestServoRanges():
+def CustomTest():
+	Move = MoveClass()
 	while (1):
 		chan = input("Channel? ")
 		val = input("Degree? ")
-
+		Move.CustomMove(chan, val)
+		time.sleep(1)
 
 # ================================================================ #
 if __name__ == "__main__":  
     print("Running servo tests...")
-
+    CustomTest()
 	TestAllServos()
 

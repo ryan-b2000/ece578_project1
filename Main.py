@@ -64,6 +64,7 @@ def predict_binaryImage(image1):
 # ================================================================ #
 def main_game():
     
+    # -------------------------------------------------------------------------------------------
     global Predict, action, accuracy, robot_gesture, gesture, img_counter
     global save_images, selected_gesture, model, cap_region_x_begin, cap_region_y_end, threshold
     global blurValue, bgSubThreshold, learningRate, isBgCaptured, triggerSwitch
@@ -98,10 +99,33 @@ def main_game():
     enable =0
     end = 0
 
-    #initialize robot's face and gesture
-    Face.FaceReset()
-    Arm.ArmsReset()
+    # -------------------------------------------------------------------------------------------
+
+    # Initialize servos, face, and arms
+    face = FaceClass()
+    arms = ArmClass()
+
+    face.FaceReset()
+    arms.ArmsReset()
+    
+
     Speak('I am glad to play a rock, scissors and paper game with you!')
+
+
+    while(1):
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     # Camera
     camera = cv2.VideoCapture(0)
