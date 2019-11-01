@@ -2,6 +2,7 @@
 
 # Handles the speech recognition capabilities
 
+import re
 import speech_recognition as sr
 
 VOICE_COMMAND_MUSIC     = "music"
@@ -18,61 +19,87 @@ VOICE_COMMAND_INVALID   = "invalid"
 # Return back the  string of text
 
 def DetectAudio():
-    recognizer = sr.Recognizer()
-    with sr.Microphone() as source:
-        print("Say something!")
-        audio = recognizer.listen(source,phrase_time_limit=5)
+	recognizer = sr.Recognizer()
+	with sr.Microphone() as source:
+		print("Say something!")
+		audio = recognizer.listen(source,phrase_time_limit=5)
  
-        # Speech recognition using Google Speech Recognition                                                                                         
-        try:
-            input_speech = recognizer.recognize_google(audio)
-        except sr.UnknownValueError:
-            input_speech = ""
-            print("Google Speech Recognition could not understand audio")
-            pass
-        except sr.RequestError as e:
-            input_speech = ""
-            print("Could not request results from Google Speech Recognition service; {0}".format(e))
-            pass
+		# Speech recognition using Google Speech Recognition                                                                                         
+		try:
+			input_speech = recognizer.recognize_google(audio)
+		except sr.UnknownValueError:
+			input_speech = ""
+			print("Google Speech Recognition could not understand audio")
+			pass
+		except sr.RequestError as e:
+			input_speech = ""
+			print("Could not request results from Google Speech Recognition service; {0}".format(e))
+			pass
 
-    return input_speech
+	return input_speech
 
 
 # =================================================================================================== #
 # Check text for a specific keyword
 #
 # Use RegEx to parse the string and look for a certain word
+# Return true if the test word is in the input speech string
+# Return false otherwise
 
-def keyword_check(input_speech):
-    
-    music_regexp = re.compile(r'music')
-    flirt_regexp = re.compile(r'flirt')
-    happy_regexp = re.compile(r'happy')
-    game_regexp = re.compile(r'game')
-    test_regexp = re.compile(r'test')
+def KeywordCheck(input_speech, test):
+	
+	if (test == VOICE_COMMAND_MUSIC):
+		regexp = re.compile(r'music')
+	elif (test == VOICE_COMMAND_FLIRT):
+		regexp = re.compile(r'flirt')
+	elif (test == VOICE_COMMAND_HAPPY):    
+		regexp = re.compile(r'happy')
+	elif (test == VOICE_COMMAND_GAME):    
+		regexp = re.compile(r'game')
+	elif (test == VOICE_COMMAND_TEST):
+		regexp = re.compile(r'test')
+	else:
+		return False
 
-    if music_regexp.search(input_speech):
-        return VOICE_COMMAND_MUSIC
+	if (regexp.search(input_speech)):
+		return True
 
-    if flirt_regexp.search(input_speech):
-        return VOICE_COMMAND_FLIRT
-
-    if happy_regexp.search(input_speech):
-        return VOICE_COMMAND_HAPPY
-
-    if game_regexp.search(input_speech):
-        return VOICE_COMMAND_GAME
-
-    if test_regexp.search(input_speech):
-        return VOICE_COMMAND_TEST
-    
-    return VOICE_COMMAND_INVALID
+	return False
 
 
 # =================================================================================================== #
 # Test Audio Detection
 
 def TestAudioDetection():
-    print("Testing audio detection...")
-    text = DetectAudio()
-    print("Speech was " + text)
+	print("Testing audio detection...")
+	text = DetectAudio()
+	print("Speech was " + text)
+
+def TestKeywordCheck():
+	print("Testing Keyword Check...")
+	
+	string = 'the music car is loud'
+	print("String: " + string)    
+	
+	print("Check for 'music'")
+	if (KeywordCheck(string, 'music')):
+		print("PASS Match found")
+	else:
+		print("FAIL No match found")
+
+	print("Check for 'brown'")
+	if (KeywordCheck(string, 'brown')):
+		print("FAIL Match found")
+	else:
+		print("PASS No match found")
+
+
+
+
+
+
+
+
+# ================================================================ #
+if __name__ == "__main__":  
+	TestKeywordCheck()

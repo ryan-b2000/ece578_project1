@@ -17,13 +17,13 @@ class GameClass:
 	    if (index == 0):
 	        self.gesture = PAPER
 	    elif (index == 1):
-	        self.gesture = ROCK
-	    elif (index == 2):
+	        self.gesture = ROCKs
+	    else:
 	        self.gesture = SCISSORS
 
 	# Determine who won the game based on the gesture from the user and the
 	# gesture for the robot
-	def game_rule(self, user):
+	def GameResult(self, user):
 	    if user == PAPER:
 	    	if self.gesture == PAPER:
 	    		print("Result: Paper - Paper")

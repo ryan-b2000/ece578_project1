@@ -1,6 +1,34 @@
 #! /usr/bin/env python3
 
 # Handles all the OpenCV and image processing from the camera
+# ======================= IMAGE PROCESSING ======================= #
+#
+def remove_background(frame):
+    fgmask = bgModel.apply(frame, learningRate=learningRate)
+    kernel = np.ones((3, 3), np.uint8)
+    fgmask = cv2.erode(fgmask, kernel, iterations=1)
+    res = cv2.bitwise_and(frame, frame, mask=fgmask)
+    return res
+
+def predict_binaryImage(image1):
+    predict_image = image.load_img(image1, target_size=(64,64))
+    predict_image = image.img_to_array(predict_image)
+    predict_image = np.expand_dims(predict_image, axis = 0)
+    result = model.predict(predict_image)
+    if result[0][0] >= 0.6:
+        prediction = 'paper'
+        return prediction, result[0][0]
+    elif result[0][1] >= 0.6:
+        prediction = 'rock'
+        return prediction, result[0][1]
+    elif result[0][2] >= 0.6:
+        prediction = 'scissors'
+        return prediction, result[0][2]
+    else:
+        prediction = 'invalid'
+        return prediction, result[0][2]
+    print("Prediction: " + prediction + "Score: " + str(result[0]))
+
 
 
 # Initialize camera
