@@ -20,7 +20,7 @@ import neopixel
 import numpy as np
 import math
 
-import threading
+
 import Game_Program as HW2
 
 
