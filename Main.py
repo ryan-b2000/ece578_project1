@@ -6,70 +6,105 @@
 from ArmManager import *
 from FaceManager import *
 from GameManager import *
-#import GpioManager
 from BotInteraction import *
+from SpeechRecognition import *
+from Test import *
+
+#import GpioManager
+
 #import ImageProcessing
-import SpeechRecognition
+
 
   
 
 # ======================= DEFINES ======================= #
+TEST = False
 
+# ======================= GLOBAL VARIABLES ======================= #
+music = False
+flirt = False
+game = False
+test = False
+happy = False
 
 
 
 # ================================================================ #
 # ============================ MAIN ============================== #
 # ================================================================ #
-def Main():
-
-	# Initialize servos, face, and arms
-	FaceReset()
-	ArmReset()
 
 
-	# Initialize OpenCV
-
-	while (1):
-
-		# Indicate that we are ready for input from the user
-		BotReady()
-
-		# Get input from user and check for any keywords
-		validInput = False
-		while (validInput == False):
-			user_input = DetectAudio()
-			if (user_input == ""):
-				print("Unable to get valid audio input...")
-			else:
-				music = KeywordCheck(user_input, 'music')
-				flirt = KeywordCheck(user_input, 'flirt')
-				happy = KeywordCheck(user_input, 'happy') 
-				game = KeywordCheck(user_input, 'game')
-				test = KeywordCheck(user_input, 'test')
-
-		# Handle the robot response based on the identified keywords
-		if (music):
-			arms.PlayMusic()
-
-		elif (test):
-			MainTest()
-
-		elif (happy):
-			BotAction(EMOTION_HAPPY)
-
-		elif (game):
-			print("Play a game...")
-			PlayGame()
-
-		else:
-			BotAction(INVALID_ACTION)
+# Initialize servos, face, and arms
+FaceReset()
+ArmReset()
 
 
+# Initialize OpenCV
+
+# Indicate that we are ready for input from the user
+BotReady()
+
+while (1):
+
+    # Get input from user and check for any keywords
+    validInput = False
+    while (validInput == False):
+        
+        if (TEST):
+            keyInput = input("Waiting for keyboard input... ")
+            if (keyInput == "music"):
+                music = True
+            if (keyInput == 'game'):
+                game = True
+            if (keyInput == 'flirt'):
+                flirt = True
+            if (keyInput == 'test'):
+                test = True
+            if (keyInput == 'happy'):
+                happy = True
+            validInput = True
+
+        else:
+            # Get the audio command from the user
+            userInput = DetectAudio()
+            
+            # Determine if the user said one of the valid keywords
+            if (userInput == ""):
+                print("Unable to get valid audio input...")
+                Speak("I did not hear you. Please say again.")
+            else:
+                validInput = True
+                music = KeywordCheck(userInput, 'music')
+                flirt = KeywordCheck(userInput, 'flirt')
+                happy = KeywordCheck(userInput, 'happy') 
+                game = KeywordCheck(userInput, 'game')
+                test = KeywordCheck(userInput, 'test')
 
 
 
+    # Handle the robot response based on the identified keywords
+    if (music):
+        BotAction(ACTION_MUSIC)
+        music = False
 
-# ================================================================ #
-if __name__ == "__main__":  
-	Main()
+    elif (test):
+        MainTest()
+        test = False
+
+    elif (happy):
+        BotAction(ACTION_HAPPY)
+        happy = False
+
+    elif (game):
+        PlayGame()
+        game = False
+
+    elif (flirt):
+        BotAction(ACTION_FLIRT)
+        flirt = False
+
+    else:
+        BotAction(ACTION_INVALID)
+
+
+
