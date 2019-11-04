@@ -102,7 +102,7 @@ def PlayGame():
     time.sleep(2)
 
     # Get gesture from the user
-    user_gesture = ROCK
+    user_gesture = ROCK # Testing
 
     # Calculate robot gesture and determine winner
     bot_gesture = GenerateGesture()
