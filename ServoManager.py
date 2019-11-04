@@ -61,6 +61,8 @@ def FaceReset():
     
 
 # ==== Eyebrow Movement ==== #
+# Channel: 0
+# Channel: 1
 def EyebrowUp(side):
     if (side == RIGHT):
         print("Right Eyebrow Up")
@@ -72,10 +74,10 @@ def EyebrowUp(side):
 def EyebrowFlat(side):
     if (side == RIGHT):
         print("Right Eyebrow Center")
-        Move(EYEBROW_R, 85)
+        Move(EYEBROW_R, 80)
     else:
         print("Left Eyebrow Center")
-        Move(EYEBROW_L, 85)
+        Move(EYEBROW_L, 80)
 
 def EyebrowDown(side):
     if (side == RIGHT):
@@ -87,6 +89,8 @@ def EyebrowDown(side):
 
 
 # ==== Eyelid Movement ==== #
+# Channel: 2
+# Channel: 3
 def EyeOpen(side):
     if (side == RIGHT):
         print("Eyelid Right Open")
@@ -105,44 +109,49 @@ def EyeClose(side):
 
 
 # ==== Eye Horizontal Movement ==== #
+# Channel: 4
 def EyeLeft():
     print("Eye Horizontal Left")
-    Move(EYE_HORIZONTAL, 80)
+    Move(EYE_HORIZONTAL, 60)
 
 def EyeCenter():
     print("Eye Horizontal Center")
-    Move(EYE_HORIZONTAL, 120)
+    Move(EYE_HORIZONTAL, 80)
 
 def EyeRight():
     print("Eye Horizontal Right")
-    Move(EYE_HORIZONTAL, 150)
+    Move(EYE_HORIZONTAL, 100)
 
 
 # ==== Eye Vertical Movement ==== #
+# Channel: 5
 def EyeUp():
     print("Eye Vertical Up")
-    Move(EYE_VERTICAL, 120)
+    Move(EYE_VERTICAL, 90)
 
 def EyeMiddle():
     print("Eye Vertical Middle")
-    Move(EYE_VERTICAL, 100)
+    Move(EYE_VERTICAL, 80)
 
 def EyeDown():
     print("Eye Vertical Down")
-    Move(EYE_VERTICAL, 80)
+    Move(EYE_VERTICAL, 60)
 
 
 # ======== Mouth Movement ======== #
+# Channel: 6
 def MouthOpen():
     print("Mouth Open")
     Move(MOUTH, 60)
 
 def MouthClose():
     print("Mouth Close")
-    Move(MOUTH, 10)
+    Move(MOUTH, 30)
 
 
 # ======== Shoulder Movement ======== #
+# Channel: 7
+# Channel: 9
 def ShoulderUp(side):
     if (side == RIGHT):
         print("Right Shoulder Up")
@@ -161,10 +170,12 @@ def ShoulderDown(side):
 
 
 # ======== Arm Movement ======== #
+# Channel: 8 Right
+# Channel: 10 Left
 def ArmOut(side):
     if (side == RIGHT):
         print("Right Arm Out")
-        Move(ARM_SIDEWAYS_R, 100)
+        Move(ARM_SIDEWAYS_R, 80)
     else:
         print("Left Arm Out")
         Move(ARM_SIDEWAYS_L, 100)
@@ -172,28 +183,32 @@ def ArmOut(side):
 def ArmIn(side):
     if (side == RIGHT):
         print("Right Arm In")
-        Move(ARM_SIDEWAYS_R, 0)
+        Move(ARM_SIDEWAYS_R, 100)
     else:
         print("Left Arm In")
         Move(ARM_SIDEWAYS_L, 0)
 
 
 # ======== Elbow Movement ======== #
+# Channel: 11 Right
+# Channel: 12 Left
 def ElbowUp(side):
     if (side == RIGHT):
         print("Right Elbow Up")
-        Move(ELBOW_R, 150)
+        Move(ELBOW_R, 120)
+        Move(ELBOW_R, 119)
     else:
         print("Left Elbow Up")
-        Move(ELBOW_L, 130)
+        Move(ELBOW_L, 40)
+        Move(ELBOW_L, 45)
 
 def ElbowDown(side):
     if (side == RIGHT):
         print("Right Elbow Down")
-        Move(ELBOW_R, 170)
+        Move(ELBOW_R, 70)
     else:
         print("Left Elbow Down")
-        Move(ELBOW_L, 180)
+        Move(ELBOW_L, 90)
 
 
 def __ConvertDegrees(degree):
@@ -204,13 +219,17 @@ def __ConvertDegrees(degree):
     else:
         deg = 0
 
+    # safety check
+    if (deg > 550):
+        deg = 550
+
     return round(deg, 0)
 
 
 
 # Sleep function abstraction
 def Sleep():
-    time.sleep(3)
+    time.sleep(1)
 
 def CustomMoveTest():
     while(1):
