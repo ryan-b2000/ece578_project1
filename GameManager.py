@@ -15,7 +15,7 @@ TIE = 'tie'
 PAPER = 'paper'
 ROCK = 'rock'
 SCISSORS = 'scissors'
-
+STUPID = True
 
 # ============================================================================ #
 # Generate the rock/paper/scissors gesture the robot uses for the game  
