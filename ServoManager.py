@@ -49,27 +49,16 @@ def Move (channel, degree):
     pca.set_pwm(int(channel), 0, int(val))
 
 
-# ==== Total Face Reset ==== #
-def FaceReset():
-    EyebrowFlat(RIGHT)
-    EyebrowFlat(LEFT)
-    EyeOpen(RIGHT)
-    EyeOpen(LEFT)
-    EyeCenter()
-    EyeMiddle()
-    MouthClose()
-    
-
 # ==== Eyebrow Movement ==== #
 # Channel: 0
 # Channel: 1
 def EyebrowUp(side):
     if (side == RIGHT):
         print("Right Eyebrow Up")
-        Move(EYEBROW_R, 150)
+        Move(EYEBROW_R, 100)
     else:
         print("Left Eyebrow Up")
-        Move(EYEBROW_L, 150)
+        Move(EYEBROW_L, 100)
 
 def EyebrowFlat(side):
     if (side == RIGHT):
@@ -82,10 +71,10 @@ def EyebrowFlat(side):
 def EyebrowDown(side):
     if (side == RIGHT):
         print("Right Eyebrow Center")
-        Move(EYEBROW_R, 70)
+        Move(EYEBROW_R, 50)
     else:
         print("Left Eyebrow Center")
-        Move(EYEBROW_L, 70)
+        Move(EYEBROW_L, 50)
 
 
 # ==== Eyelid Movement ==== #
@@ -112,11 +101,11 @@ def EyeClose(side):
 # Channel: 4
 def EyeLeft():
     print("Eye Horizontal Left")
-    Move(EYE_HORIZONTAL, 60)
+    Move(EYE_HORIZONTAL, 70)
 
 def EyeCenter():
     print("Eye Horizontal Center")
-    Move(EYE_HORIZONTAL, 80)
+    Move(EYE_HORIZONTAL, 85)
 
 def EyeRight():
     print("Eye Horizontal Right")
@@ -127,22 +116,22 @@ def EyeRight():
 # Channel: 5
 def EyeUp():
     print("Eye Vertical Up")
-    Move(EYE_VERTICAL, 90)
+    Move(EYE_VERTICAL, 80)
 
 def EyeMiddle():
     print("Eye Vertical Middle")
-    Move(EYE_VERTICAL, 80)
+    Move(EYE_VERTICAL, 70)
 
 def EyeDown():
     print("Eye Vertical Down")
-    Move(EYE_VERTICAL, 60)
+    Move(EYE_VERTICAL, 50)
 
 
 # ======== Mouth Movement ======== #
 # Channel: 6
 def MouthOpen():
     print("Mouth Open")
-    Move(MOUTH, 60)
+    Move(MOUTH, 50)
 
 def MouthClose():
     print("Mouth Close")
@@ -195,17 +184,16 @@ def ArmIn(side):
 def ElbowUp(side):
     if (side == RIGHT):
         print("Right Elbow Up")
-        Move(ELBOW_R, 120)
-        Move(ELBOW_R, 119)
+        Move(ELBOW_R, 100)
     else:
         print("Left Elbow Up")
         Move(ELBOW_L, 40)
-        Move(ELBOW_L, 45)
+
 
 def ElbowDown(side):
     if (side == RIGHT):
         print("Right Elbow Down")
-        Move(ELBOW_R, 70)
+        Move(ELBOW_R, 60)
     else:
         print("Left Elbow Down")
         Move(ELBOW_L, 90)
@@ -253,10 +241,10 @@ def TestAllServos():
     EyebrowFlat(LEFT)
     Sleep()
 
-    EyeClose(RIGHT)
-    Sleep()
-    EyeOpen(RIGHT)
-    Sleep()
+    #EyeClose(RIGHT)
+    #Sleep()
+    #EyeOpen(RIGHT)
+    #Sleep()
 
     EyeLeft()
     Sleep()
@@ -273,32 +261,41 @@ def TestAllServos():
     MouthClose()
     Sleep()
 
-    ShoulderUp(RIGHT)
-    Sleep()
-    ShoulderDown(RIGHT)
-    Sleep()
-    ShoulderUp(LEFT)
-    Sleep()
-    ShoulderDown(LEFT)
-    Sleep()
+    #ShoulderUp(RIGHT)
+    #Sleep()
+    #ShoulderDown(RIGHT)
+    #Sleep()
+    #ShoulderUp(LEFT)
+    #Sleep()
+    #ShoulderDown(LEFT)
+    #Sleep()
 
-    ArmOut(RIGHT)
-    Sleep()
-    ArmIn(RIGHT)
-    Sleep()
-    ArmOut(LEFT)
-    Sleep()
-    ArmIn(LEFT)
-    Sleep()
+    #ArmOut(RIGHT)
+    #Sleep()
+    #ArmIn(RIGHT)
+    #Sleep()
+    #ArmOut(LEFT)
+    #Sleep()
+    #ArmIn(LEFT)
+    #Sleep()
 
+    ElbowUp(RIGHT) # not received
+    #Sleep()
     ElbowDown(RIGHT)
     Sleep()
     ElbowUp(RIGHT)
     Sleep()
+    ElbowDown(RIGHT)
+    Sleep()
+    ElbowUp(RIGHT)
+    Sleep()
+
+    ElbowUp(LEFT)
+    Sleep()
     ElbowDown(LEFT)
     Sleep()
     ElbowUp(LEFT)
-    Sleep()
+
 
 
 def CustomTest():
@@ -311,6 +308,6 @@ def CustomTest():
 # ================================================================ #
 if __name__ == "__main__":  
     print("Running servo tests...")
-    CustomTest()
-    #TestAllServos()
+    #CustomTest()
+    TestAllServos()
 
