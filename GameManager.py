@@ -6,6 +6,7 @@ import time
 from random import randint
 from BotInteraction import *
 from ArmManager import *
+from neo_pixel_scroll import *
 
 WINNER = 'winner'
 LOSER = 'loser'
@@ -38,35 +39,46 @@ def GameResult(bot, user):
     if user == PAPER:
         if bot == PAPER:
             print("Result: Paper - Paper")
-            return TIE
+	    neo_pixel_print("PAPER")
+            return TIE	   
         elif bot == ROCK:
             print("Result: Paper - Rock")
+	    neo_pixel_print("ROCK")
             return WINNER
         else:
             print("Result: Paper - Scissors")
+	    neo_pixel_print("SCISSORS")
             return LOSER
 
     if user == ROCK:
         if bot == PAPER:
             print("Result: Rock - Paper")
+	    neo_pixel_print("PAPER")
             return LOSER
         elif bot == ROCK:
             print("Result: Rock - Rock")
+	    neo_pixel_print("ROCK")
             return TIE
         else:
             print("Result: Rock - Scissors")
+	    neo_pixel_print("SCISSORS")
             return WINNER
+
 
     if user == SCISSORS:
         if bot == PAPER:
             print("Result: Scissors - Paper")
+	    neo_pixel_print("PAPER")
             return WINNER
         elif bot == ROCK:
             print("Result: Scissors - Rock")
+	    neo_pixel_print("ROCK")
             return LOSER
         else:
             print("Result: Scissors - Scissors")
+	    neo_pixel_print("SCISSORS")
             return TIE
+
 
 
 # ============================================================================ #
@@ -78,6 +90,7 @@ def PlayGame():
     # Do countdown for the user
     print("Ready?...")
     Speak("Ready?")
+    neo_pixel_print("READY?")
     BangDrumBoth()
     time.sleep(2)
 
@@ -110,13 +123,16 @@ def PlayGame():
 
     if (result == WINNER):
         print("User is the winner")
+        neo_pixel_print("WINNER!")
         BotWinner()
 
     if (result == LOSER):
         print("User is the loser")
+	neo_pixel_print("LOSER!")
         BotLoser()
     else:
         print("User and robot tied")
+	neo_pixel_print("TIE!")
         BotTied()
 
     # Reset the robot servos
