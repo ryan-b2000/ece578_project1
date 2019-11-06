@@ -24,20 +24,27 @@ def ArmReset():
 
 def BangDrumRight():
     print("Bang drum right")
+    ElbowUp(RIGHT) # not received
     ElbowDown(RIGHT)
     ElbowUp(RIGHT)
+    Sleep()
+    ElbowDown(RIGHT)
+    Sleep()
+    ElbowUp(RIGHT)
+    Sleep()
 
 def BangDrumLeft():
     print("Bang drum left")
+    ElbowUp(LEFT)
+    Sleep()
     ElbowDown(LEFT)
+    Sleep()
     ElbowUp(LEFT)
 
 def BangDrumBoth():
     print("Bang both drums")
-    ElbowDown(LEFT)
-    ElbowDown(RIGHT)
-    ElbowUp(LEFT)
-    ElbowUp(RIGHT)
+    BangDrumLeft()
+    BangDrumRight()
 
 
 # ================================================================ #
@@ -45,16 +52,15 @@ if __name__ == "__main__":
     print("Running arm tests...")
 
     ArmReset()
-    time.sleep(4)
+    time.sleep(2)
 
     BangDrumRight()
-    time.sleep(4)
+    time.sleep(2)
     
     BangDrumLeft()
-    time.sleep(4)
+    time.sleep(2)
 
     BangDrumBoth()
-    time.sleep(4)
+    time.sleep(2)
 
-    PlayMusic()
-    time.sleep(4)
+

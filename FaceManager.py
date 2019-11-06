@@ -125,25 +125,24 @@ def Angry():
 # ================================================================ #
 if __name__ == "__main__":  
     print("Running face tests...")
-    Face = FaceClass()
 
-    Face.FaceReset()
+    FaceReset()
     time.sleep(2)
 
-    Face.Excited()
+    Excited()
     time.sleep(2)
 
-    Face.VeryHappy()
+    VeryHappy()
     time.sleep(2)
 
-    Face.Sad()
+    Sad()
     time.sleep(2)
 
-    Face.Blink()
+    Blink()
     time.sleep(2)
 
-    Face.WinkRight()
+    WinkRight()
     time.sleep(2)
 
-    Face.Angry()
+    Angry()
     time.sleep(2)

@@ -18,7 +18,7 @@ from Test import *
   
 
 # ======================= DEFINES ======================= #
-TEST = False
+TEST = True
 
 # ======================= GLOBAL VARIABLES ======================= #
 music = False
