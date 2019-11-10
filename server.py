@@ -7,7 +7,7 @@ class sever(threading.Thread):
     def __init__(self):
         threading.Thread.__init__(self)
         self.s=socket.socket(socket.AF_INET,socket.SOCK_STREAM) #创建socket对象
-        self.s.bind(('',4444))
+        self.s.bind(('',2222))
         self.s.listen(128)
         self.newSocket, self.clientAddr = self.s.accept()
         print('now waiting for frames...')
