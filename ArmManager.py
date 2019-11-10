@@ -17,8 +17,6 @@ def ArmReset():
     print("Arm reset...")
     ElbowUp(RIGHT)
     ElbowUp(LEFT)
-    ArmIn(RIGHT)
-    ArmIn(LEFT)
     ShoulderDown(RIGHT)
     ShoulderDown(LEFT)
 

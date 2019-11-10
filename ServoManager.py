@@ -31,6 +31,29 @@ ARM_SIDEWAYS_L  = 10
 ELBOW_R         = 11     
 ELBOW_L         = 12   
 
+# Min-Max angle settings
+EYEBROW_R_MAX       = 100
+EYEBROW_R_MIN       = 50
+EYEBROW_L_MAX       = 100
+EYEBROW_L_MAX       = 50
+EYELID_R_MAX        = 150
+EYELID_R_MIN        = 90
+EYELID_L_MAX        = 120
+EYELID_L_MIN        = 60
+EYE_HORIZ_MAX       = 100
+EYE_HORIZ_MIN       = 70
+EYE_VERT_MAX        = 80
+EYE_VERT_MIN        = 50
+MOUTH_MAX           = 50
+MOUTH_MIN           = 30
+ARM_ROTATE_R_MAX    = 100
+ARM_ROTATE_R_MIN    = 50
+ARM_ROTATE_L_MAX    = 100
+ARM_ROTATE_L_MIN    = 50
+ELBOW_R_MAX         = 100
+ELBOW_R_MIN         = 60
+ELBOW_L_MAX         = 90
+ELBOW_L_MIN         = 40
 
 RIGHT = 'Right'
 LEFT = 'Left'
@@ -42,10 +65,76 @@ pca.set_pwm_freq(40)                # set the frequency of the system as 50Hz
 print("PCA9685 initialized")
 
 
+def SafetyCheck(channel, degree):
+    # RIGHT EYEBROW
+    if (channel == EYEBROW_R):
+        if (degree > EYEBROW_R_MAX):
+            return EYEBROW_R_MAX
+        elif (degree < EYEBROW_R_MIN):
+            return EYEBROW_R_MIN
+        else:
+            return degree
+
+    # LEFT EYEBROW
+    if (channel == EYEBROW_L):
+        if (degree > EYEBROW_L_MAX):
+            return EYEBROW_L_MAX
+        elif (degree < EYEBROW_L_MIN):
+            return EYEBROW_L_MIN
+        else:
+            return degree
+
+    # EYE HORIZONTAL
+    if (channel == EYE_HORIZONTAL):
+        if (degree > EYE_HORIZ_MAX):
+            return EYE_HORIZ_MAX
+        elif (degree < EYE_HORIZ_MIN):
+            return EYE_HORIZ_MIN
+        else:
+            return degree
+
+    # EYE VERTICAL
+    if (channel == EYE_VERTICAL):
+        if (degree > EYE_VERT_MAX):
+            return EYE_VERT_MAX
+        elif (degree < EYE_VERT_MIN):
+            return EYE_VERT_MIN
+        else:
+            return degree
+
+    # MOUTH
+    if (channel == MOUTH):
+        if (degree > MOUTH_MAX):
+            return MOUTH_MAX
+        elif (degree < MOUTH_MIN):
+            return MOUTH_MIN
+        else:
+            return degree
+
+    # RIGHT ELBOW
+    if (channel == ELBOW_R):
+        if (degree > ELBOW_R_MAX):
+            return ELBOW_R_MAX
+        elif (degree < ELBOW_R_MIN):
+            return ELBOW_R_MIN
+        else:
+            return degree
+
+    # LEFT ELBOW
+    if (channel == ELBOW_L):
+        if (degree > ELBOW_L_MAX):
+            return ELBOW_L_MAX
+        elif (degree < ELBOW_L_MIN):
+            return ELBOW_L_MIN
+        else:
+            return degree
+
+
+
 def Move (channel, degree):
     #print("PCA9685: Channel: " + str(channel) + " Degree: " + str(degree))
-    val = __ConvertDegrees(degree)
-    #print("Degree: " + str(degree) + " = " + str(val))
+    val = ConvertDegrees(degree)
+    SafetyCheck(channel, val)
     pca.set_pwm(int(channel), 0, int(val))
 
 
@@ -199,7 +288,7 @@ def ElbowDown(side):
         Move(ELBOW_L, 90)
 
 
-def __ConvertDegrees(degree):
+def ConvertDegrees(degree):
     
     deg = int(degree)
     if (deg > 0):
