@@ -10,7 +10,7 @@ from GameManager import *
 from BotInteraction import *
 #import ImageProcessing
 import SpeechRecognition
-
+from human_detection import *
   
 
 # ======================= DEFINES ======================= #
@@ -27,7 +27,9 @@ def Main():
 	FaceReset()
 	ArmReset()
 
-
+	personcount = 0
+	timecount = 0
+	getPerson(personcount, timecount)
 	# Initialize OpenCV
 
 	while (1):

@@ -27,38 +27,52 @@ def id_class_name(class_id, classes):
 
 
 # Loading model
-model = cv2.dnn.readNetFromTensorflow('/home/zhe/PycharmProjects/HumanDetection/models/frozen_inference_graph.pb',
-                                      '/home/zhe/PycharmProjects/HumanDetection/models/ssd_mobilenet_v2_coco_2018_03_29.pbtxt')
-
-#image = cv2.imread("/home/zhe/PycharmProjects/HumanDetection/image.jpeg")
-cap = cv2.VideoCapture(0)
-while True:
-    ret, image = cap.read()
-    image_height, image_width, _ = image.shape
-
-    model.setInput(cv2.dnn.blobFromImage(image, size=(300, 300), swapRB=True))
-    output = model.forward()
+def personDetection(output):
     # print(output[0,0,:,:].shape)
+        for detection in output[0, 0, :, :]:
+            confidence = detection[2]
+            if confidence > .5:
+                class_id = detection[1]
+                class_name=id_class_name(class_id,classNames)
+                #print(str(str(class_id) + " " + str(detection[2])  + " " + class_name))
+                return class_name
+                #box_x = detection[3] * image_width
+                #box_y = detection[4] * image_height
+                #box_width = detection[5] * image_width
+                #box_height = detection[6] * image_height
+                #cv2.rectangle(image, (int(box_x), int(box_y)), (int(box_width), int(box_height)), (23, 230, 210), thickness=1)
+                #cv2.putText(image,class_name ,(int(box_x), int(box_y+.05*image_height)),cv2.FONT_HERSHEY_SIMPLEX,(.005*image_width),(0, 0, 255))
 
 
-    for detection in output[0, 0, :, :]:
-        confidence = detection[2]
-        if confidence > .5:
-            class_id = detection[1]
-            class_name=id_class_name(class_id,classNames)
-            print(str(str(class_id) + " " + str(detection[2])  + " " + class_name))
-            box_x = detection[3] * image_width
-            box_y = detection[4] * image_height
-            box_width = detection[5] * image_width
-            box_height = detection[6] * image_height
-            cv2.rectangle(image, (int(box_x), int(box_y)), (int(box_width), int(box_height)), (23, 230, 210), thickness=1)
-            cv2.putText(image,class_name ,(int(box_x), int(box_y+.05*image_height)),cv2.FONT_HERSHEY_SIMPLEX,(.005*image_width),(0, 0, 255))
-
-
-    cv2.imshow('image', image)
+        #cv2.imshow('image', image)
     # cv2.imwrite("image_box_text.jpg",image)
 
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
-cap.release()
-cv2.destroyAllWindows()
+      #  if cv2.waitKey(1) & 0xFF == ord('q'):
+     #       return
+    #cap.release()
+    #cv2.destroyAllWindows()
+def getPerson(personcount, timecount):
+    cap = cv2.VideoCapture(0)
+    model = cv2.dnn.readNetFromTensorflow('/home/zhe/桌面/ece578_project1/models/frozen_inference_graph.pb',
+                                      '/home/zhe/桌面/ece578_project1/models/ssd_mobilenet_v2_coco_2018_03_29.pbtxt')
+
+    while True:
+        ret, image = cap.read()
+        image_height, image_width, _ = image.shape
+        model.setInput(cv2.dnn.blobFromImage(image, size=(300, 300), swapRB=True))
+        output = model.forward()
+        personIsThere = personDetection(output)
+        if (personIsThere == 'person'):
+            personcount += 1
+        else:
+            timecount += 1
+        print(personIsThere)
+        print(personcount)
+        print(timecount)
+        if (personIsThere == 'person' and personcount == 20):
+            print('break')
+            break
+        elif (timecount == 10):
+            print('reset')
+            timecount = 0
+            personcount = 0
