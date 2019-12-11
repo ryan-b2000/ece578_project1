@@ -5,122 +5,122 @@
 from ServoManager import *
 from ArmManager import *
 from FaceManager import *
+from BotInteraction import *
 
 TEST_SLEEP_TIME = 1
 
 def MainTest():
     time.sleep(0.8)
     print("Running main test")
-    
+
     # Reset everything
     FaceReset()
     ArmReset()
 
     # Test audio output
-    OutputSpeech('I am working on test my body! If my movement is not matched to my words, it means something is broken!')
+    Speak('I am running a test on my body! If my movement is not matched to my words, it means something is broken!', "Diagnostic.mp3")
     time.sleep(TEST_SLEEP_TIME)
-    
-    OutputSpeech("right eyebrow up")
+
+    Speak("right eyebrow up", "right_eyebrow_up.mp3")
     EyebrowUp(RIGHT)
     time.sleep(TEST_SLEEP_TIME)
-    
-    OutputSpeech("right eyebrown down")
+
+    Speak("right eyebrown down", "right_eyebrow_down.mp3")
     EyebrowDown(RIGHT)
     time.sleep(TEST_SLEEP_TIME)
-    
-    OutputSpeech("right eyebrow flat")
+
+    Speak("right eyebrow flat", "right_eyebrow_flat.mp3")
     EyebrowFlat(RIGHT)
     time.sleep(TEST_SLEEP_TIME)
 
-    OutputSpeech("left eyebrow up")
+    Speak("left eyebrow up", "left_eyebrow_up.mp3")
     EyebrowUp(LEFT)
     time.sleep(TEST_SLEEP_TIME)
-    
-    OutputSpeech("left eyebrow down")
+
+    Speak("left eyebrow down", "left_eyebrow_down.mp3")
     EyebrowDown(LEFT)
     time.sleep(TEST_SLEEP_TIME)
-    
-    OutputSpeech("left eyebrow flat")
+
+    Speak("left eyebrow flat", "left_eyebrow_flat.mp3")
     EyebrowFlat(LEFT)
     time.sleep(TEST_SLEEP_TIME)
 
-    OutputSpeech("eyes close")
+    Speak("eyes close", "eyes_close.mp3")
     EyeClose(RIGHT)
     time.sleep(TEST_SLEEP_TIME)
-    
-    OutputSpeech("eyes open")
+
+    Speak("eyes open", "eyes_open.mp3")
     EyeOpen(RIGHT)
     time.sleep(TEST_SLEEP_TIME)
 
-    OutputSpeech("mouth open")
+    Speak("mouth open", "mouth_open.mp3")
     MouthOpen()
     time.sleep(TEST_SLEEP_TIME)
-    
-    OutputSpeech("mouth close")
+
+    Speak("mouth close", "mouth_close.mp3")
     MouthClose()
     time.sleep(TEST_SLEEP_TIME)
 
-    OutputSpeech("right shoulder up")
+    Speak("right shoulder up", "right_shoulder_up.mp3")
     ShoulderUp(RIGHT)
     time.sleep(TEST_SLEEP_TIME)
-    
-    OutputSpeech("right shoulder down")
+
+    Speak("right shoulder down", "right_shoulder_down.mp3")
     ShoulderDown(RIGHT)
     time.sleep(TEST_SLEEP_TIME)
-    
-    OutputSpeech("left should up")
+
+    Speak("left shoulder up", "left_shoulder_up.mp3")
     ShoulderUp(LEFT)
     time.sleep(TEST_SLEEP_TIME)
-    
-    OutputSpeech("left shoulder down")
+
+    Speak("left shoulder down", "left_shoulder_down.mp3")
     ShoulderDown(LEFT)
     time.sleep(TEST_SLEEP_TIME)
 
-    OutputSpeech("right arm out")
+    Speak("right arm out", "right_arm_out.mp3")
     ArmOut(RIGHT)
     time.sleep(TEST_SLEEP_TIME)
-    
-    OutputSpeech("right arm in")
+
+    Speak("right arm in", "right_arm_in.mp3")
     ArmIn(RIGHT)
     time.sleep(TEST_SLEEP_TIME)
-    
-    OutputSpeech("left arm out")
+
+    Speak("left arm out", "left_arm_out.mp3")
     ArmOut(LEFT)
     time.sleep(TEST_SLEEP_TIME)
-    
-    OutputSpeech("left arm in")
+
+    Speak("left arm in", "left_arm_in.mp3")
     ArmIn(LEFT)
     time.sleep(TEST_SLEEP_TIME)
 
-    OutputSpeech("right elbow down")
+    Speak("right elbow down", "right_elbow_down.mp3")
     ElbowDown(RIGHT)
     time.sleep(TEST_SLEEP_TIME)
-    
-    OutputSpeech("right elbow up")
+
+    Speak("right elbow up", "right_elbow_up.mp3")
     ElbowUp(RIGHT)
     time.sleep(TEST_SLEEP_TIME)
-    
-    OutputSpeech("left elbow down")
+
+    Speak("left elbow down", "left_elbow_down.mp3")
     ElbowDown(LEFT)
     time.sleep(TEST_SLEEP_TIME)
-    
-    OutputSpeech("left elbow up")
+
+    Speak("left elbow up", "left_elbow_up.mp3")
     ElbowUp(LEFT)
     time.sleep(TEST_SLEEP_TIME)
 
-    OutputSpeech("Bang right drum")
+    Speak("Bang right drum", "bang_right_drum.mp3")
     BangDrumRight()
     time.sleep(TEST_SLEEP_TIME)
-    
-    OutputSpeech("Bang left drum")
+
+    Speak("Bang left drum", "bang_left_drum.mp3")
     BangDrumLeft()
     time.sleep(TEST_SLEEP_TIME)
 
-    OutputSpeech("Bang Both drums")
+    Speak("Bang Both drums", "bang_both_drums.mp3")
     BangDrumBoth()
     time.sleep(TEST_SLEEP_TIME)
 
-    OutputSpeech("Play music!")
+    Speak("Play music!", "music.mp3")
     PlayMusic()
     time.sleep(TEST_SLEEP_TIME)
-

@@ -18,7 +18,7 @@ SCISSORS = 'scissors'
 STUPID = True
 
 # ============================================================================ #
-# Generate the rock/paper/scissors gesture the robot uses for the game  
+# Generate the rock/paper/scissors gesture the robot uses for the game
 
 def GenerateGesture():
     index = randint(0,2)
@@ -40,7 +40,7 @@ def GameResult(bot, user):
         if bot == PAPER:
             print("Result: Paper - Paper")
 	    neo_pixel_print("PAPER")
-            return TIE	   
+            return TIE
         elif bot == ROCK:
             print("Result: Paper - Rock")
 	    neo_pixel_print("ROCK")
@@ -84,33 +84,33 @@ def GameResult(bot, user):
 # ============================================================================ #
 def PlayGame():
     print("Playing game...")
-    Speak("OK. Let's play rock paper scissors.")
+    Speak("OK. Let's play rock paper scissors.", "RPC.mp3")
     time.sleep(0.5)
 
     # Do countdown for the user
     print("Ready?...")
-    Speak("Ready?")
+    Speak("Ready?", "ready.mp3")
     neo_pixel_print("READY?")
     BangDrumBoth()
     time.sleep(2)
 
     print("Rock...")
-    Speak("Rock")
+    Speak("Rock", "rock.mp3")
     BangDrumBoth()
     time.sleep(2)
 
     print("Paper...")
-    Speak("Paper")
+    Speak("Paper", "paper.mp3")
     BangDrumBoth()
     time.sleep(2)
 
     print("Scissors...")
-    Speak("Scissors")
+    Speak("Scissors", "scissors.mp3")
     BangDrumBoth()
     time.sleep(2)
 
     print("Go!")
-    Speak("Go!")
+    Speak("Go!", "go.mp3")
     BangDrumBoth()
     time.sleep(2)
 
