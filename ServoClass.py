@@ -1,6 +1,8 @@
+#! /usr/bin/env python3
 
 import Adafruit_PCA9685
 import time
+#from pca9685 import pca
 
 ########################################################################################
 # pwm channel number on PWM Driver
@@ -11,14 +13,15 @@ EYELID_R = 3
 EYE_VERTICAL = 4
 EYE_HORIZONTAL = 5
 MOUTH = 6
+ARM_UPDOWN_L = 7
+ARM_ROTATE_L = 8
+ELBOW_L = 9
+ARM_UPDOWN_R = 10
+ARM_ROTATE_R = 11
+ELBOW_R = 12
 
-ARM_UPDOWN_R = 12
-ARM_ROTATE_R = 13
-ELBOW_R = 14
 
-ARM_UPDOWN_L = 8
-ARM_ROTATE_L = 9
-ELBOW_L = 10
+
 
 ########################################################################################
 # Min-Max angle settings
@@ -145,20 +148,23 @@ class ServoClass:
         self.__position = self.__min
         
         # Init an instance of the the PCA9685
-        #self.__pca = Adafruit_PCA9685.PCA9685()  # Sets up the global member for the driver object
-        #self.__pca.set_pwm_freq(40)              # set the frequency of the system as 50Hz
+        self.__pca = Adafruit_PCA9685.PCA9685()  # Sets up the global member for the driver object
+        self.__pca.set_pwm_freq(40)              # set the frequency of the system as 50Hz
         print("PCA9685 initialized")
 
 
     #######################################################################################################
     def move(self, deg):
         # Safety check
-        if deg == 0:
-            deg = 0
-        elif deg > self.__max:
-            deg = self.__max
-        elif deg < self.__min:
-            deg = self.__min
+
+        #print("Move: " + str(self.__name) + " Deg: " + str(deg))
+
+        #if deg == 0:
+        #    deg = 0
+        #elif deg > self.__max:
+        #    deg = self.__max
+        #elif deg < self.__min:
+        #    deg = self.__min
 
         # Set position
         self.__position = deg
@@ -172,7 +178,8 @@ class ServoClass:
         degree = round(degree, 0)
 
         # Do the servo move
-        #self.__pca.set_pwm(int(self.__chan), 0, int(degree))
+        #pca.set_pwm(int(self.__chan), 0, int(degree))
+        self.__pca.set_pwm(int(self.__chan), 0, int(degree))
 
 
     def getName(self):

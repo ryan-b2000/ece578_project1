@@ -1,5 +1,13 @@
-import os
+#! /usr/bin/env python3
+# Reference Design: https://github.com/athena15/project_kojak
+import copy
 import cv2
+import numpy as np
+from keras.models import load_model
+import pygame
+import time
+from keras.preprocessing import image
+import os
 from aip import AipBodyAnalysis
 from threading import Thread
 import base64

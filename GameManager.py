@@ -26,16 +26,30 @@ class GameManager():
 		print("Game Manager initialized")
 
 
+	def take_image(self):
+	    cam = cv2.VideoCapture(0)
+	    i = 0
+	    start = datetime.now()
+	    while True:
+	        s, im = cam.read()  # captures image
+	        #gray = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
+	        cv2.imshow('frame',im)
+	        if cv2.waitKey(1) & 0xFF == ord('q'):
+	            break
+	        ends = datetime.now()
+	        duration = ends - start
+	        if duration.total_seconds() > 5:
+	            break
+	    cv2.imwrite('/home/pi/Desktop/ece578_project1/images/3.jpg', im)
+	    cam.release()
+	    cv2.destroyAllWindows()
+
 	# ============================================================================ #
 	# Generate the rock/paper/scissors gesture the robot uses for the game  
 	def generateGesture(self):
-		index = randint(0,2)
-		if (index == 0):
-			return PAPER
-		elif (index == 1):
-			return ROCK
-		else:
-			return SCISSORS
+		gesture = ['rock', 'paper', 'scissors']
+    	index = random.randint(0, 2)
+    	return gesture[index]
 
 
 	# ============================================================================ #
@@ -47,101 +61,88 @@ class GameManager():
 		if user == PAPER:
 			if bot == PAPER:
 				print("Result: Paper - Paper")
-				#neo_pixel_print("PAPER")
 				return TIE	   
 			elif bot == ROCK:
 				print("Result: Paper - Rock")
-				#neo_pixel_print("ROCK")
 				return WINNER
 			else:
 				print("Result: Paper - Scissors")
-				#neo_pixel_print("SCISSORS")
 				return LOSER
 
 		if user == ROCK:
 			if bot == PAPER:
 				print("Result: Rock - Paper")
-				#neo_pixel_print("PAPER")
 				return LOSER
 			elif bot == ROCK:
 				print("Result: Rock - Rock")
-				#neo_pixel_print("ROCK")
 				return TIE
 			else:
 				print("Result: Rock - Scissors")
-				#neo_pixel_print("SCISSORS")
 				return WINNER
-
 
 		if user == SCISSORS:
 			if bot == PAPER:
 				print("Result: Scissors - Paper")
-				#neo_pixel_print("PAPER")
 				return WINNER
 			elif bot == ROCK:
 				print("Result: Scissors - Rock")
-				#neo_pixel_print("ROCK")
 				return LOSER
 			else:
 				print("Result: Scissors - Scissors")
-				#neo_pixel_print("SCISSORS")
 				return TIE
 
 
 	# ============================================================================ #
 	def playGame(self):
 		print("Playing game...")
-		bot.speak("OK. Let's play rock paper scissors.")
+		speak("OK. Let's play rock paper scissors.", "RPC.mp3")
 		time.sleep(0.5)
 
 		# Do countdown for the user
 		print("Ready?...")
-		bot.speak("Ready?")
-		#neo_pixel_print("READY?")
-		arms.bangDrumBoth()
-		time.sleep(2)
+		speak("Ready?", "ready.mp3")
+		time.sleep(1)
 
 		print("Rock...")
-		bot.speak("Rock")
-		arms.bangDrumBoth()
-		time.sleep(2)
+		speak("Rock", "rock.mp3")
+		time.sleep(1)
 
 		print("Paper...")
-		bot.speak("Paper")
-		arms.bangDrumBoth()
-		time.sleep(2)
+		speak("Paper", "paper.mp3")
+		time.sleep(1)
 
 		print("Scissors...")
-		bot.speak("Scissors")
-		arms.bangDrumBoth()
-		time.sleep(2)
+		speak("Scissors", "scissors.mp3")
+		time.sleep(1)
 
 		print("Go!")
-		bot.speak("Go!")
-		#neo_pixel_print("GO!")
-		arms.bangDrumBoth()
-		time.sleep(2)
+		speak("Go!", "go.mp3")
+		time.sleep(1)
 
-		# Get gesture from the user
-		user_gesture = ROCK # Testing
+		# Get the user gesture
+		user_gest = "unknown"
+		while user_gest != 'rock' and user_gest != 'paper' and user_gest != 'scissors':
+	    	take_image()
+	    	user_gest = get_gesture()
+	    	print("User gesture: " + user_gest)
+	    	if user_gest != 'rock' and user_gest != 'paper' and user_gest != 'scissors':
+	    		print("Bot Confused")
+	    		speak("Please try again.")
 
 		# Calculate robot gesture and determine winner
 		bot_gesture = self.generateGesture()
-		result = self.gameResult(bot_gesture, user_gesture)
+		result = self.gameResult(bot_gesture, user_gest)
 
 		if (result == WINNER):
 			print("User is the winner")
-			#neo_pixel_print("WINNER!")
-			bot.botWinner()
+			botWinner()
 
 		if (result == LOSER):
 			print("User is the loser")
-			#neo_pixel_print("LOSER!")
-			bot.botLoser()
+			botLoser()
 		else:
 			print("User and robot tied")
-			#neo_pixel_print("TIE!")
-			bot.botTied()
+			botTied()
 
 		# Reset the robot servos
 		arms.reset()
