@@ -4,8 +4,6 @@ import copy
 import cv2
 import numpy as np
 from keras.models import load_model
-# from phue import Bridge
-# from soco import SoCo
 import pygame
 import time
 from keras.preprocessing import image

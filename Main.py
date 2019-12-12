@@ -5,11 +5,11 @@
 ###################################################################
 from ArmManager import arms
 from FaceManager import face
-from BotInteraction import bot
+from BotInteraction import *
 from GameManager import game
 from SpeechRecognition import speech
 from Test import *
-
+from human_detection import *
 
 
 # ======================= DEFINES ======================= #
@@ -33,12 +33,6 @@ do_happy = False
 
 
 
-# Initialize OpenCV
-
-# Indicate that we are ready for input from the user
-bot.botReady()
-
-
 while 1:
 
     # Get input from user and check for any keywords
@@ -60,13 +54,21 @@ while 1:
             validInput = True
 
         else:
+            # wait for a person to come to the window
+            personcount = 0
+            timecount = 0
+            getPerson(personcount, timecount)
+
+            # Indicate that we are ready for input from the user
+            botReady()
+
             # Get the audio command from the user
             userInput = speech.detectAudio()
             
             # Determine if the user said one of the valid keywords
             if userInput == "":
                 print("Unable to get valid audio input...")
-                bot.speak("I did not hear you. Please say again.")
+                speak("I did not hear you. Please say again.")
             else:
                 validInput = True
                 do_music = speech.keywordCheck(userInput, 'music')
@@ -75,19 +77,17 @@ while 1:
                 do_game = speech.keywordCheck(userInput, 'game')
                 do_test = speech.keywordCheck(userInput, 'test')
 
-
-
     # Handle the robot response based on the identified keywords
     if do_music:
-        bot.botAction(ACTION_MUSIC)
+        botAction(ACTION_MUSIC)
         do_music = False
 
     elif test:
-        print("Need to do a test function")
+        MainTest()
         do_test = False
 
     elif happy:
-        bot.botAction(ACTION_HAPPY)
+        botAction(ACTION_HAPPY)
         do_happy = False
 
     elif do_game:
@@ -95,8 +95,8 @@ while 1:
         do_game = False
 
     elif do_flirt:
-        bot.botAction(ACTION_FLIRT)
+        botAction(ACTION_FLIRT)
         do_flirt = False
 
     else:
-        bot.botAction(ACTION_INVALID)
+        botAction(ACTION_INVALID)
