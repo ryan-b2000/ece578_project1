@@ -53,9 +53,9 @@ def personDetection(output):
     #cv2.destroyAllWindows()
 def getPerson(personcount, timecount):
     cap = cv2.VideoCapture(0)
-    model = cv2.dnn.readNetFromTensorflow('/home/pi/Desktop/ece578_project1/models/frozen_inference_graph.pb',
-                                      '/home/pi/Desktop/ece578_project1/models/ssd_mobilenet_v2_coco_2018_03_29.pbtxt')
 
+    model = cv2.dnn.readNetFromTensorflow('/home/pi/Desktop/ece578_project1/models/frozen_inference_graph.pb',
+                                      '/home/pi/Desktop/ece578_project1/models/ssd_mobilenet_v2_coco_2018_03_29.pbtxt'
     while True:
         ret, image = cap.read()
         image_height, image_width, _ = image.shape
@@ -69,6 +69,7 @@ def getPerson(personcount, timecount):
         print(personIsThere)
         print(personcount)
         print(timecount)
+
         if (personIsThere == 'person' and personcount == 10):
             print('break')
             break

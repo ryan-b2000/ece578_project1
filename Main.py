@@ -3,6 +3,8 @@
 
 # NEW
 ###################################################################
+from BotInteraction import *
+from human_detection import *
 from ArmManager import arms
 from FaceManager import face
 from BotInteraction import *
@@ -10,7 +12,6 @@ from GameManager import game
 from SpeechRecognition import speech
 from Test import *
 from human_detection import *
-
 
 # ======================= DEFINES ======================= #
 TEST = False
@@ -29,7 +30,11 @@ do_happy = False
 # ================================================================ #
 
 
-# Initialize servos, face, and arms
+
+	personcount = 0
+	timecount = 0
+	getPerson(personcount, timecount)
+	# Initialize OpenCV
 
 
 
@@ -93,10 +98,11 @@ while 1:
     elif do_game:
         game.playGame()
         do_game = False
-
+        
     elif do_flirt:
         botAction(ACTION_FLIRT)
         do_flirt = False
 
     else:
         botAction(ACTION_INVALID)
+
