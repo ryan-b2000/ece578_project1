@@ -1,149 +1,144 @@
 #! /usr/bin/env python3
 
 
-'''	#################################################################################################
-	
-	DimBot FaceClass
+''' #################################################################################################
+    
+    DimBot FaceClass
 
-	This class handles the movements for the face servos. It provides an interface for displaying
-	varying emotional responses by the roboto
+    This class handles the movements for the face servos. It provides an interface for displaying
+    varying emotional responses by the roboto
 
 '''
 
 import time
-from ServoManager import *
+from ServoManager import servos
 
 # ======================= DEFINES ======================= #
-RIGHT = 'Right'
-LEFT = 'Left'
+EYEBROW_R = 0
+EYEBROW_L = 1
+EYELID_L = 2
+EYELID_R = 3
+EYE_VERTICAL = 4
+EYE_HORIZONTAL = 5
+MOUTH = 6
+ARM_UPDOWN_R = 12
+ARM_ROTATE_R = 13
+ELBOW_R = 14
+ARM_UPDOWN_L = 8
+ARM_ROTATE_L = 9
+ELBOW_L = 10
 
 
 
+class FaceManager():
+
+    def __init__(self):
+        print("Face Manager initialized")
+        self.reset()
+
+    def reset(self):
+        print("Face reset...")
+        servos.setMovementFrame(0)
+        servos.setServoPosition(EYEBROW_R, 80)      # eyebrow flat
+        servos.setServoPosition(EYEBROW_L, 80)      # eyebrow flat
+        servos.setServoPosition(EYELID_R, 60)       # eye open
+        servos.setServoPosition(EYELID_L, 60)       # eye open
+        servos.setServoPosition(EYE_HORIZONTAL, 80) # eye center
+        servos.setServoPosition(EYE_VERTICAL, 70)   # eye center
+        servos.setServoPosition(MOUTH, 20)          # mouth close
+        servos.beginMotion()
 
 
-def FaceReset():
-	EyebrowFlat(RIGHT)
-	EyebrowFlat(LEFT)
-	EyeOpen(RIGHT)
-	EyeOpen(LEFT)
-	EyeCenter()
-	EyeMiddle()
-	MouthClose()
-	print("Reset is done")
+    def excited(self):
+        print("Display excited expression")
+        servos.setMovementFrame(0.1)
+        servos.setServoPosition(MOUTH, 50)          # mouth open
+        servos.setServoPosition(EYEBROW_R, 90)     # eyebrow up
+        servos.setServoPosition(EYEBROW_L, 90)     # eyebrow up
+        servos.setServoPosition(EYE_HORIZONTAL, 80) # eye center
+        servos.setServoPosition(EYELID_R, 60)       # eye open
+        servos.setServoPosition(EYELID_L, 60)       # eye open
+        servos.beginMotion()
+        time.sleep(2)
+        self.reset()
 
 
-def Excited():
-	MouthOpen()
-	EyebrowFlat(RIGHT)
-	EyebrowFlat(LEFT)
-	EyeMiddle()
-	EyeOpen(RIGHT)
-	EyeOpen(LEFT)
-	time.sleep(2)
-	FaceReset()
-	print("Display excited expression")
+    def veryHappy(self):
+        print("Display very happy expression")
+        servos.setMovementFrame(0.1)
+        servos.setServoPosition(MOUTH, 50)          # mouth open
+        servos.setServoPosition(EYEBROW_R, 100)     # eyebrow up
+        servos.setServoPosition(EYEBROW_L, 100)     # eyebrow up
+        servos.setServoPosition(EYE_HORIZONTAL, 80) # eye center
+        servos.setServoPosition(EYELID_R, 60)       # eye open
+        servos.setServoPosition(EYELID_L, 60)       # eye open
+        servos.setServoPosition(MOUTH, 50)          # mouth open
+        servos.beginMotion()
+        time.sleep(2)
+        self.reset()
 
 
-def VeryHappy():
-	MouthOpen()
-	EyeUp()
-	EyeOpen(RIGHT)
-	EyeOpen(LEFT)
-	EyebrowUp(RIGHT)
-	EyebrowUp(LEFT)
-	time.sleep(2)
-	FaceReset()
-	print("Display very happy expression")
+    def sad(self):
+        print("Display sad expression")
+        servos.setMovementFrame(0.1)
+        servos.setServoPosition(MOUTH, 50)          # mouth close
+        servos.setServoPosition(EYEBROW_L, 70)      # eyebrow low
+        servos.setServoPosition(EYEBROW_L, 70)      # eyebrow low
+        servos.setServoPosition(EYELID_R, 60)       # eye close
+        servos.setServoPosition(EYELID_L, 60)       # eye close
+        servos.setServoPosition(EYE_VERTICAL, 60)   # eyes down
+        servos.beginMotion()
+        time.sleep(2)
+        self.reset()
 
 
-def Sad():
-	MouthClose()
-	EyebrowFlat(RIGHT)
-	EyebrowFlat(LEFT)
-	EyeClose(RIGHT)
-	EyeClose(LEFT)
-	EyeDown()
-	time.sleep(2)
-	FaceReset()
-	print("Display sad expression")
+    def angry(self):
+        print("Display angry expression")
+        servos.setMovementFrame(0.1)
+        servos.setServoPosition(MOUTH, 50)          # mouth close
+        servos.setServoPosition(EYE_VERTICAL, 70)   # eyes down
+        servos.setServoPosition(EYEBROW_R, 50)      # eyebrow down
+        servos.setServoPosition(EYEBROW_L, 50)      # eyebrow down
+        servos.setServoPosition(EYE_HORIZONTAL, 60)
+        servos.beginMotion()
+        servos.setServoPosition(EYE_HORIZONTAL, 60)     # eye left
+        servos.beginMotion()
+        servos.setServoPosition(EYE_HORIZONTAL, 100)    # eye right
+        servos.beginMotion()
+        servos.setServoPosition(EYE_HORIZONTAL, 80)     # eye center
+        self.reset()
+        
+
+    def mouthClose(self):
+        servos.setMovementFrame(0)
+        servos.setServoPosition(MOUTH, 20)          # mouth close
+        servos.beginMotion()
 
 
-# blink both eyes
-def Blink():
-	i = 0
-	MouthClose()
-	EyebrowUp(RIGHT)
-	EyebrowUp(LEFT)
-	EyeOpen()
-
-	while(i < 2):
-		EyebrowDown(RIGHT)
-		EyebrowDown(LEFT)
-		EyeClose()
-		time.sleep(0.3)
-		EyebrowUp(RIGHT)
-		EyebrowUp(LEFT)
-		EyeOpen()
-		time.sleep(0.3)
-		i = i + 1	
-		time.sleep(0.3)
-	time.sleep(2)
-	FaceReset()
-	print("Blinking expression")
+    def mouthOpen(self):
+        servos.setMovementFrame(0)
+        servos.setServoPosition(MOUTH, 50)          # mouth open
+        servos.beginMotion()        
 
 
-# Wink right eye
-def WinkRight(): 
-	for i in range(2):
-		EyebrowUp(RIGHT)
-		EyeOpen(RIGHT)
-		time.sleep(0.5)
-		EyebrowDown(RIGHT)
-		EyeClose(RIGHT)
-	EyebrowUp(RIGHT)
-	EyeOpen(RIGHT)
-	time.sleep(2)
-	FaceReset()
-	print("Wink right eye")
-
-
-def Angry():
-	MouthClose()
-	EyeMiddle()
-	EyebrowDown(RIGHT)
-	EyebrowDown(LEFT)
-	EyeLeft()
-	time.sleep(1)
-	EyeRight()
-	time.sleep(1)
-	EyeCenter()
-	time.sleep(2)
-	FaceReset()
-	print("Display angry expression")
-
+# Create single of the face class to import elsewhere
+face = FaceManager()
 
 # ================================================================ #
 if __name__ == "__main__":  
-	print("Running face tests...")
-	Face = FaceClass()
+    print("Running face tests...")
 
-	Face.FaceReset()
-	time.sleep(2)
+    face.reset()
+    time.sleep(2)
 
-	Face.Excited()
-	time.sleep(2)
+    face.excited()
+    time.sleep(2)
 
-	Face.VeryHappy()
-	time.sleep(2)
+    face.veryHappy()
+    time.sleep(2)
 
-	Face.Sad()
-	time.sleep(2)
+    face.sad()
+    time.sleep(2)
 
-	Face.Blink()
-	time.sleep(2)
-
-	Face.WinkRight()
-	time.sleep(2)
-
-	Face.Angry()
-	time.sleep(2)
+    face.angry()
+    print("End of face manager test")
