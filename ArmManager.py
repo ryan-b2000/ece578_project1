@@ -48,6 +48,7 @@ class ArmManager:
         servos.setServoPosition(ARM_UPDOWN_L, 70)    # arm relax
         servos.beginMotion()
        
+       
 
     def bangDrumRight(self):
         print("Bang Right Drum")
@@ -64,14 +65,16 @@ class ArmManager:
     def bangDrumLeft(self):
         print("Bang Left Drum")
         servos.setMovementFrame(0)
+        servos.setServoPosition(ELBOW_L, 140)       # elbow up
+        servos.beginMotion()
         servos.setServoPosition(ARM_ROTATE_L, 65)   # arm in
+        servos.setServoPosition(ARM_UPDOWN_L, 100)   # arm up
+        servos.beginMotion()
+        servos.setServoPosition(ELBOW_L, 105)        # elbow down
+        servos.beginMotion()
         servos.setServoPosition(ELBOW_L, 140)       # elbow up
         servos.beginMotion()
-        servos.setServoPosition(ARM_UPDOWN_L, 70)   # arm up
-        servos.setServoPosition(ELBOW_L, 90)        # elbow down
-        servos.beginMotion()
-        servos.setServoPosition(ELBOW_L, 140)       # elbow up
-        servos.beginMotion()
+
 
     def armCelebration(self):
         print("Arm Celebration")
@@ -106,7 +109,7 @@ class ArmManager:
         # LEFT ARM
         # left arm high/out and back
         servos.setServoPosition(ELBOW_L, 140)        # elbow up
-        servos.setServoPosition(ARM_UPDOWN_L, 90)   # arm center
+        servos.setServoPosition(ARM_UPDOWN_L, 100)   # arm center
         servos.setServoPosition(ARM_ROTATE_L, 65)   # arm in
         servos.beginMotion()
         #arm out
@@ -127,6 +130,18 @@ class ArmManager:
         #arm in
         servos.setServoPosition(ARM_ROTATE_L, 65)   # arm in
         servos.beginMotion()
+        
+    def bangSticks(self):
+        servos.setServoPosition(ARM_UPDOWN_L, 70)   # arm up
+        servos.setServoPosition(ARM_UPDOWN_R, 70)   # arm up
+        servos.setServoPosition(ELBOW_L, 140)       # elbow up
+        servos.setServoPosition(ELBOW_R, 30)        # elbow up
+        servos.beginMotion()
+        servos.setServoPosition(ARM_ROTATE_L, 65)   # arm in
+        servos.setServoPosition(ARM_ROTATE_R, 60)   # arm in
+        servos.beginMotion()
+        servos.setServoPosition(ELBOW_L, 100)   # elbow down
+        servos.setServoPosition(ELBOW_R, 120)
    
 
 # Initialize class singleton for importing
@@ -135,9 +150,12 @@ arms = ArmManager()
 # ================================================================ #
 if __name__ == "__main__":  
     print("Running arm tests...")
+    print("Running arm tests...")
     time.sleep(1)
     arms.reset()
     time.sleep(3)
+    arms.bangDrumRight()
+    arms.bangDrumLeft()
     arms.bangDrumRight()
     arms.bangDrumLeft()
     time.sleep(3)
@@ -147,4 +165,5 @@ if __name__ == "__main__":
     time.sleep(1)
     arms.reset()
     time.sleep(1)
+    print("Finished arm tests...")
 

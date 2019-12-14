@@ -1,5 +1,5 @@
 #! /usr/bin/env python3
-
+import os
 
 # NEW
 ###################################################################
@@ -8,10 +8,12 @@ from human_detection import *
 from ArmManager import arms
 from FaceManager import face
 from BotInteraction import *
-from GameManager import game
+#from GameManager import game
 from SpeechRecognition import speech
 from Test import *
 from human_detection import *
+from game import *
+
 
 # ======================= DEFINES ======================= #
 TEST = False
@@ -29,80 +31,71 @@ do_happy = False
 # ============================ MAIN ============================== #
 # ================================================================ #
 
-
-
-	personcount = 0
-	timecount = 0
-	getPerson(personcount, timecount)
-	# Initialize OpenCV
+personFlag = False
+speakCount = 0
 
 
 
 while 1:
 
-    # Get input from user and check for any keywords
-    validInput = False
-    while validInput == False:
+    if personFlag == False:
+        # wait for a person to come to the window
+        personcount = 0
+        timecount = 0
+        getPerson(personcount, timecount)
+        speak("Hello I am Dimbot. Can I show you what I can do?", "Intro.mp3")
+        speak("Please say: music, game, happy, flirt, or test66", "Menu.mp3")
+        personFlag = True
+    else:
+        userInput = ""
+        # Get the audio command from the user
+        # Indicate that we are ready for input from the user
+        #justAudioOut("Ready.mp3")
         
-        if TEST:
-            keyInput = input("Waiting for keyboard input... ")
-            if keyInput == "music":
-                do_music = True
-            if keyInput == 'game':
-                do_game = True
-            if keyInput == 'flirt':
-                do_flirt = True
-            if keyInput == 'test':
-                do_test = True
-            if keyInput == 'happy':
-                do_happy = True
-            validInput = True
+        os.popen('arecord -D hw:1,0 -d 2 -f S16_LE --disable-channels -c 2 -r 44100 -t wav test')
+        time.sleep(2)
+        #userInput = speech.detectAudio()
+        userInput = speech.transcribeFile()
+   
+        do_music = speech.keywordCheck(userInput, 'music')
+        do_flirt = speech.keywordCheck(userInput, 'flirt')
+        do_happy = speech.keywordCheck(userInput, 'happy') 
+        do_game = speech.keywordCheck(userInput, 'game')
+        do_test = speech.keywordCheck(userInput, 'test')
+
+        # Handle the robot response based on the identified keywords
+        if do_music:
+            botAction(ACTION_MUSIC)
+            do_music = False
+            speak("I am ready for command", "Ready.mp3")
+
+        elif do_test:
+            MainTest()
+            do_test = False
+            speak("I am ready for command", "Ready.mp3")
+
+        elif do_happy:
+            botAction(ACTION_HAPPY)
+            do_happy = False
+            speak("I am ready for command", "Ready.mp3")
+
+        elif do_game:
+            main_game()
+            do_game = False
+            speak("I am ready for command", "Ready.mp3")
+            
+        elif do_flirt:
+            botAction(ACTION_FLIRT)
+            do_flirt = False
+            speak("I am ready for command", "Ready.mp3")
 
         else:
-            # wait for a person to come to the window
-            personcount = 0
-            timecount = 0
-            getPerson(personcount, timecount)
-
-            # Indicate that we are ready for input from the user
-            botReady()
-
-            # Get the audio command from the user
-            userInput = speech.detectAudio()
+            print("Bot Interaction: Invalid")
+            speak("I do not understand the command.", "dont_understand.mp3")
+            speakCount += 1
             
-            # Determine if the user said one of the valid keywords
-            if userInput == "":
-                print("Unable to get valid audio input...")
-                speak("I did not hear you. Please say again.")
-            else:
-                validInput = True
-                do_music = speech.keywordCheck(userInput, 'music')
-                do_flirt = speech.keywordCheck(userInput, 'flirt')
-                do_happy = speech.keywordCheck(userInput, 'happy') 
-                do_game = speech.keywordCheck(userInput, 'game')
-                do_test = speech.keywordCheck(userInput, 'test')
+            if speakCount == 4:
+                personFlag = False
+                speakCount = 0
 
-    # Handle the robot response based on the identified keywords
-    if do_music:
-        botAction(ACTION_MUSIC)
-        do_music = False
-
-    elif test:
-        MainTest()
-        do_test = False
-
-    elif happy:
-        botAction(ACTION_HAPPY)
-        do_happy = False
-
-    elif do_game:
-        game.playGame()
-        do_game = False
-        
-    elif do_flirt:
-        botAction(ACTION_FLIRT)
-        do_flirt = False
-
-    else:
-        botAction(ACTION_INVALID)
 

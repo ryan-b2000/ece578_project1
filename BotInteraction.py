@@ -6,6 +6,9 @@ import time
 import threading
 from FaceManager import face
 from ArmManager import arms
+from ServoManager import servos
+
+
 
 
 # ============================================================================ #
@@ -15,15 +18,30 @@ ACTION_HAPPY = 'happy'
 ACTION_MUSIC = 'music'
 
 TEST_SLEEP_TIME = 1
+EYEBROW_R = 0
+EYEBROW_L = 1
+EYELID_L = 2
+EYELID_R = 3
+EYE_VERTICAL = 4
+EYE_HORIZONTAL = 5
+MOUTH = 6
+ARM_UPDOWN_L = 7
+ARM_ROTATE_L = 8
+ELBOW_L = 9
+ARM_UPDOWN_R = 10
+ARM_ROTATE_R = 11
+ELBOW_R = 12
 
 #Add this address after moving to PI
-MP3ADDRESS = '/home/pi/Fall_2019/mp3s/'
+MP3ADDRESS = '/home/pi/Desktop/test/ece578_project1/mp3s/'
 
 speakFlag = True
 speakLock = threading.Lock()
 
 
-
+def justAudioOut(filename):
+    f = str(filename)
+    os.popen( 'mpg321 "'+MP3ADDRESS+'""'+f+'" ')
 
 # ============================================================================ #
 def outputSpeech(content, filename):
@@ -82,7 +100,7 @@ def speak(content, mp3):
 # ============================================================================ #
 def botReady():
     print("Bot Interaction: Ready")
-    speak("I am ready for your command.", "Ready.mp3")
+    speak("Please say flirt. test. music. or happy.", "menu.mp3")
     time.sleep(2)
 
 
@@ -91,16 +109,17 @@ def botWinner():
     print("Bot Interaction: Game Winner")
     speak("I am the winner!", "I_win.mp3")
     face.veryHappy()
-    arms.bangDrumLeft()
-    arms.bangDrumRight()
-    arms.bangDrumBoth()
+    speak("woohoo. celebrate", "woohoo.mp3")
+    arms.armCelebration()
 
 
 # ============================================================================ #
 def botLoser():
     print("Bot Interaction: Game Loser")
     speak("You are the winner!", "You_win.mp3")
+    speak("I am sad.", "sad.mp3")
     face.sad()
+    time.sleep(3)
     arms.reset()
 
 
@@ -110,22 +129,33 @@ def botTied():
     speak("We tied the game.", "Tie.mp3")
     arms.reset()
     face.reset()
-    
+
 
 # ============================================================================ #
 def playMusic():
     print("Bot Interaction: Playing music")
     speak("Look at me playing music!", "Playing_music.mp3")
+    arms.reset()
     arms.bangDrumLeft()
     arms.bangDrumRight()
-    arms.bangDrumBoth()
-
+    arms.bangDrumRight()
+    arms.bangDrumLeft()
 
 # ============================================================================ #
 def flirt():
     print("Bot Interaction: Flirt")
+    servos.setServoPosition(EYE_HORIZONTAL, 80) # eye center
     speak("Well. Hello there, good looking.", "Flirt.mp3")
-
+    arms.bangDrumLeft()
+    arms.bangDrumLeft()
+    servos.setServoPosition(EYE_HORIZONTAL, 100) # eye right
+    servos.beginMotion()
+    servos.setServoPosition(EYE_VERTICAL, 60)   # eye left
+    servos.beginMotion()
+    servos.setServoPosition(MOUTH, 50)          # mouth close
+    servos.setServoPosition(EYE_HORIZONTAL, 80) # eye center
+    servos.beginMotion()
+    
 
 # ============================================================================ #
 def botAction(type):
@@ -142,9 +172,8 @@ def botAction(type):
 
     if (type == ACTION_INVALID):
         print("Bot Interaction: Invalid")
-        speak("I do not understand the command.", "Don't_understand.mp3")
-        time.sleep(1)
-        speak("Please say: music, game, happy, flirt, or test", "Menu.mp3")
+        speak("I do not understand the command.", "dont_understand.mp3")
+
 
 
 
@@ -241,7 +270,11 @@ def testSpeech():
 if __name__ == "__main__":  
     print("Running Bot Interaction tests")
 
-    testSpeech()
+    #while(1):
+    #    justAudioOut("Ready.mp3")
+    #    time.sleep(1)
+        
+    #testSpeech()
 '''
     bot.botReady()
     time.sleep(4)

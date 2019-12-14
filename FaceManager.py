@@ -21,12 +21,12 @@ EYELID_R = 3
 EYE_VERTICAL = 4
 EYE_HORIZONTAL = 5
 MOUTH = 6
-ARM_UPDOWN_R = 12
-ARM_ROTATE_R = 13
-ELBOW_R = 14
-ARM_UPDOWN_L = 8
-ARM_ROTATE_L = 9
-ELBOW_L = 10
+ARM_UPDOWN_L = 7
+ARM_ROTATE_L = 8
+ELBOW_L = 9
+ARM_UPDOWN_R = 10
+ARM_ROTATE_R = 11
+ELBOW_R = 12
 
 
 
@@ -84,11 +84,9 @@ class FaceManager():
         servos.setServoPosition(MOUTH, 50)          # mouth close
         servos.setServoPosition(EYEBROW_L, 70)      # eyebrow low
         servos.setServoPosition(EYEBROW_L, 70)      # eyebrow low
-        servos.setServoPosition(EYELID_R, 60)       # eye close
-        servos.setServoPosition(EYELID_L, 60)       # eye close
         servos.setServoPosition(EYE_VERTICAL, 60)   # eyes down
         servos.beginMotion()
-        time.sleep(2)
+        time.sleep(4)
         self.reset()
 
 
@@ -107,7 +105,6 @@ class FaceManager():
         servos.beginMotion()
         servos.setServoPosition(EYE_HORIZONTAL, 80)     # eye center
         self.reset()
-        
 
     def mouthClose(self):
         servos.setMovementFrame(0)
@@ -119,7 +116,6 @@ class FaceManager():
         servos.setMovementFrame(0)
         servos.setServoPosition(MOUTH, 50)          # mouth open
         servos.beginMotion()        
-
 
 # Create single of the face class to import elsewhere
 face = FaceManager()

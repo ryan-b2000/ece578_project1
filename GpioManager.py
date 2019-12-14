@@ -5,31 +5,51 @@
 
 import RPi.GPIO as GPIO
 
+RED_PIN = 37  # 26
+YELLOW_PIN = 35 # 19
+YELLOWGREEN_PIN = 33 # 13
+GREEN1_PIN = 31 #6
+GREEN2_PIN = 29 #5
 
-def Setup(self):
-	print("GPIO setup...")
-	GPIO.setwarnings(False) # Ignore warning for now
-	GPIO.setmode(GPIO.BCM) # Use physical pin numbering
-	GPIO.setup(18, GPIO.OUT, initial=GPIO.LOW) # Set pin 8 to be an output pin and set initial value to low (off)
-	GPIO.setup(15,GPIO.OUT, initial=GPIO.LOW)
-	GPIO.setup(23,GPIO.OUT, initial=GPIO.LOW)
 
-def RedOn():
-    GPIO.output(23,GPIO.HIGH)
+class GpioManager():
 
-def RedOff():
-    GPIO.output(23,GPIO.LOW)
+    def __init__(self):
+        print("GPIO setup...")
+        GPIO.setwarnings(False) # Ignore warning for now
+        GPIO.setmode(GPIO.BCM) # Use physical pin numbering
+        GPIO.setup(RED_PIN, GPIO.OUT, initial=GPIO.LOW) # Set pin 8 to be an output pin and set initial value to low (off)
+        GPIO.setup(YELLOW_PIN, GPIO.OUT, initial=GPIO.LOW)
+        GPIO.setup(YELLOWGREEN_PIN, GPIO.OUT, initial=GPIO.LOW)
+        GPIO.setup(GREEN1_PIN, GPIO.OUT, initial=GPIO.LOW)
+        GPIO.setup(GREEN2_PIN, GPIO.OUT, initial=GPIO.LOW)
 
-def YellowOn():
-    GPIO.output(15, GPIO.HIGH)
 
-def YellowOff():
-    GPIO.output(15,GPIO.LOW)
+    def ledON(self, group):
+        if group == 0:
+            GPIO.output(RED_PIN, GPIO.HIGH)
+        if group == 1:
+            GPIO.output(YELLOW_PIN, GPIO.HIGH)
+        if group == 2:
+            GPIO.output(YELLOWGREEN_PIN, GPIO.HIGH)
+        if group == 3:
+            GPIO.output(GREEN1_PIN, GPIO.HIGH)
+        if group == 4:
+            GPIO.output(GREEN2_PIN, GPIO.HIGH)    
 
-def GreenOn():
-    GPIO.output(18, GPIO.HIGH) # Turn on
 
-def GreenOff():
-    GPIO.output(18, GPIO.LOW) # Turn off
-    #sleep(1) # Sleep for 1 second
+    def ledOFF(self):
+        GPIO.output(RED_PIN, GPIO.LOW)
+        GPIO.output(YELLOW_PIN, GPIO.LOW)
+        GPIO.output(YELLOWGREEN_PIN, GPIO.LOW)
+        GPIO.output(GREEN1_PIN, GPIO.LOW)
+        GPIO.output(GREEN2_PIN, GPIO.LOW)    
 
+
+gpioManager = GpioManager()
+if __name__ == "__main__":  
+    print("Running Bot Interaction tests")
+
+if __name__ == "__main__":  
+    print("Running Bot Interaction tests")
+    gpioManager.ledON(1)

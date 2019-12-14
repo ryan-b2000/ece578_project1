@@ -1,14 +1,6 @@
-#! /usr/bin/env python3
-# Reference Design: https://github.com/athena15/project_kojak
-import copy
-import cv2
-import numpy as np
-from keras.models import load_model
-import pygame
-import time
-from keras.preprocessing import image
 import os
-from aip import AipBodyAnalysis
+import cv2
+#from aip import AipBodyAnalysis
 from threading import Thread
 import base64
 import requests
@@ -30,7 +22,7 @@ def get_gesture():
     SECRET_KEY = 'vR56VlAj86Ge5DxRWc3r7tebnIBKgrSD'
     access_token = '24.81f7c15d29c61166d891fd05519bf326.2592000.1577321280.282335-17857142'
     request_url = "https://aip.baidubce.com/rest/2.0/image-classify/v1/gesture"
-    f = open('/home/zhe/Desktop/ece578_project1/images/3.jpg', 'rb')
+    f = open('/home/pi/Desktop/test/ece578_project1/images/3.jpg', 'rb')
     img = base64.b64encode(f.read())
     params = {"image":img}
     request_url = request_url + "?access_token=" + access_token
@@ -38,6 +30,7 @@ def get_gesture():
     response = requests.post(request_url, data=params, headers=headers)
     if response:
         result = response.json()
+        final_result = 'others'
         print(result)
         for res in result['result']:
             if res['classname'] == 'Two':
@@ -46,4 +39,8 @@ def get_gesture():
                 final_result = 'paper'
             elif res['classname'] == 'Fist':
                 final_result = 'rock'
+            elif res['classname'] == 'Face':
+                pass
+            else:
+                final_result = 'others'
     return final_result

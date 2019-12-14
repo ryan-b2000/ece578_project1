@@ -1,4 +1,5 @@
 import cv2
+#from GpioManager import gpioManager
 
 # Pretrained classes in the model
 classNames = {0: 'background',
@@ -54,8 +55,10 @@ def personDetection(output):
 def getPerson(personcount, timecount):
     cap = cv2.VideoCapture(0)
 
-    model = cv2.dnn.readNetFromTensorflow('/home/pi/Desktop/ece578_project1/models/frozen_inference_graph.pb',
-                                      '/home/pi/Desktop/ece578_project1/models/ssd_mobilenet_v2_coco_2018_03_29.pbtxt'
+    print("Loading model")
+    model = cv2.dnn.readNetFromTensorflow('/home/pi/Desktop/test/ece578_project1/models/frozen_inference_graph.pb',
+                                      '/home/pi/Desktop/test/ece578_project1/models/ssd_mobilenet_v2_coco_2018_03_29.pbtxt')
+    print("model finished loading...")
     while True:
         ret, image = cap.read()
         image_height, image_width, _ = image.shape
@@ -67,13 +70,14 @@ def getPerson(personcount, timecount):
         else:
             timecount += 1
         print(personIsThere)
-        print(personcount)
-        print(timecount)
-
-        if (personIsThere == 'person' and personcount == 10):
+        print("personcount:" + str(personcount))
+        print("timecount:" + str(timecount))
+        #gpioManager.ledON(personcount)
+        
+        if (personIsThere == 'person' and personcount == 3):
             print('break')
             break
-        elif (timecount == 5):
+        elif (timecount == 3):
             print('reset')
             timecount = 0
             personcount = 0
